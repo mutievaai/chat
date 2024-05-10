@@ -89,6 +89,13 @@
     $("#" + data.user_id + "-status").removeClass("online-status");
   });
 
+  // Handle user disconnect event
+  socket.on("disconnect", function () {
+    $("#" + sender_id + "-status").text("Offline");
+    $("#" + sender_id + "-status").addClass("offline-status");
+    $("#" + sender_id + "-status").removeClass("online-status");
+  });
+
   //chat save of user
   $("#chat-form").submit(function (event) {
     event.preventDefault();
