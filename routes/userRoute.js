@@ -11,7 +11,13 @@ user_route.use(session({
     resave: false, // don't save session if unmodified
     saveUninitialized: false, // don't create session until something stored
   }));
-  
+
+user_route.use((req, res, next) =>{
+    res.locals.isAuthenticated = !!req.session.user;
+    res.locals.user = req.session.user;
+    next();
+})
+
 user_route.use(bodyParser.json());
 user_route.use(bodyParser.urlencoded({extended:true}));
 

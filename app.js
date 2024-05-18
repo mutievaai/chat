@@ -1,8 +1,8 @@
 require("dotenv").config();
 
 var mongoose = require("mongoose");
-
-mongoose.connect("mongodb://localhost:27017");
+const url = "mongodb+srv://kambardias4:admin789@cluster0.tfpxkjo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+mongoose.connect(url);
 
 const app = require("express")();
 
