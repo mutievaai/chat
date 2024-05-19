@@ -1,0 +1,14 @@
+<%- include('layouts/header.ejs') %>
+<h1>Профиль пользователя</h1>
+<p>Имя: <%= user.name %></p>
+<p>Email: <%= user.email %></p>
+
+<img src="<%= user.image %>" alt="User Image" />
+
+<form action="/profile/upload" method="post" enctype="multipart/form-data">
+  <label for="image">Update Profile Image:</label>
+  <input type="file" name="image" id="image" accept="image/*" required />
+  <button type="submit">Upload</button>
+
+  <!-- Добавьте здесь другие поля профиля -->
+</form>
