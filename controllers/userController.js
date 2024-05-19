@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 const Chat = require('../models/chatModel');
+const Post = require('../models/postModel')
 const bcrypt = require('bcrypt');
 
 
@@ -78,7 +79,7 @@ const loadDashboard = async(req, res) =>{
     try {
         var users = await User.find({ _id: { $nin:[req.session.user._id]}});
         res.render('dashboard', {user: req.session.user, users:users})
-}
+    }
         // if(req.session.user) {
         //     res.render('dashboard', {user:req.session.user})
         // } else {
@@ -86,6 +87,17 @@ const loadDashboard = async(req, res) =>{
         //     return res.redirect('/login');
         // }
      catch (error) {
+        console.log(error.message);
+    }
+}
+
+
+const loadAllUsers = async(req, res) =>{
+    try{
+        var users = await User.find({});
+        res.render('admin', {user: req.session.user, users:users})
+    }
+    catch(error){
         console.log(error.message);
     }
 }
@@ -106,6 +118,67 @@ const saveChat = async(req, res) => {
         res.status(400).send({success:false, msg:error.message});
     }
 }
+// activity
+const loadActivity = async(req, res) =>{
+    try {
+        var posts = await Post.find({});
+        // console.log(posts)
+        res.render('activity', {user: req.session.user, posts:posts})
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+const createPost = async(req, res) => {
+    try {
+        const userId = req.session.user._id; // Assuming user ID is stored in session
+        const post = new Post({
+            user_id: userId,
+            title: req.body.title, 
+            image: 'images/'+req.file.filename,
+            content: req.body.content
+        });
+
+        await post.save();
+        // var posts = await Post.find({});
+        // res.render('activity', {user: req.session.user, posts:posts})
+        res.redirect('activity')
+    } catch (error) {
+       console.log(error.message); 
+    }
+}
+// admin-panel
+const getUserById = async (req, res) => {
+    try {
+        const user = await User.findById(req.params.userId);
+        res.json(user);
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: 'Server error' });
+    }
+}
+
+const updateUser = async (req, res) => {
+    try {
+        console.log('update ' + req.params.userId)
+        console.log(req.body)
+        await User.findByIdAndUpdate(req.params.userId, req.body);
+        res.status(200).json({ message: 'User updated successfully' });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: 'Server Error' });
+    }
+}
+
+const deleteUser = async (req, res) => {
+    try {
+        console.log('delete ' + req.params.userId)
+        await User.findByIdAndDelete(req.params.userId);
+        res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+        console.log(error.message);
+        res.status(500).json({ error: 'Server Error' });
+    }
+}
 
 module.exports = {
     registerLoad,
@@ -113,6 +186,12 @@ module.exports = {
     loadLogin,
     login,
     logout,
-    loadDashboard, 
+    loadDashboard,
+    loadActivity,
+    loadAllUsers,
+    createPost,
+    getUserById,
+    updateUser,
+    deleteUser,
     saveChat
 }

@@ -55,6 +55,16 @@ user_route.get('/logout', auth.isLogin, userController.logout);
 user_route.get('/dashboard', auth.isLogin, userController.loadDashboard)
 user_route.post('/save-chat', userController.saveChat)
 
+user_route.get('/activity', auth.isLogin, userController.loadActivity)
+user_route.post('/activity', upload.single('image'), userController.createPost)
+
+user_route.get('/admin', auth.isLogin, userController.loadAllUsers)
+user_route.get('/admin/:userId', auth.isLogin, userController.getUserById);
+user_route.post('/admin/update/:userId', auth.isLogin, userController.updateUser);
+user_route.delete('/admin/delete/:userId', auth.isLogin, userController.deleteUser);
+
+
+
 user_route.get('*', function(req, res){
     res.redirect('/');
 })
