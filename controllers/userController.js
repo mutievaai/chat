@@ -1,7 +1,11 @@
 const User = require('../models/userModel');
 const Chat = require('../models/chatModel');
 const Post = require('../models/postModel')
+const FriendRequest = require('../models/friendRequestModel')
 const bcrypt = require('bcrypt');
+const fs = require('fs');
+const path = require('path');
+// const bcrypt = require('bcrypt');
 
 
 const registerLoad = async(req, res) => {
@@ -15,11 +19,15 @@ const registerLoad = async(req, res) => {
 const register = async(req, res) => {
     try {
         const passwordHash = await bcrypt.hash(req.body.password, 10);
+        
+        const imagePath = req.file.path;
+        const imageBuffer = fs.readFileSync(imagePath);
+        const imageBase64 = imageBuffer.toString('base64');
 
         const user = new User({
             name: req.body.name, 
             email: req.body.email,
-            image: 'images/'+req.file.filename,
+            image: imageBase64,
             password: passwordHash
         });
 
@@ -179,7 +187,28 @@ const deleteUser = async (req, res) => {
         res.status(500).json({ error: 'Server Error' });
     }
 }
+// Friends
+const loadFriends = async (req, res) => {
+    try{
+        const userId = req.session.user._id;
+        //request
+        const friendRequests  = await FriendRequest.find({ requestTo: userId }).populate('requestFrom');
+        console.log(friendRequests)
+        //friends
+        const user = await User.findById(userId).populate('friends');
+        if (!user){
+            return res.status(404).json({ error: 'User not found' });
+        }
+        // Extract and send the friends array
+        const friends = user.friends;
+        console.log(friends)
+        res.render('friends', {user: req.session.user, friendRequests:friendRequests, friends:friends})
+    }catch (error) {
+        console.error(error.message);
+        // res.status(500).json({ error: 'Server error' });
+    }
 
+}
 module.exports = {
     registerLoad,
     register,
@@ -193,5 +222,6 @@ module.exports = {
     getUserById,
     updateUser,
     deleteUser,
+    loadFriends,
     saveChat
 }

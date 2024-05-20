@@ -34,7 +34,7 @@ const storage =  multer.diskStorage({
         cb(null, path.join(__dirname,'../public/images'));
     },
     filename:function(req,file,cb){
-        const name = Date.now()+'-'+file.originalname;
+        const name = Date.now()+path.extname(file.originalname);
         cb(null, name);
     }
 });
@@ -63,6 +63,7 @@ user_route.get('/admin/:userId', auth.isLogin, userController.getUserById);
 user_route.post('/admin/update/:userId', auth.isLogin, userController.updateUser);
 user_route.delete('/admin/delete/:userId', auth.isLogin, userController.deleteUser);
 
+user_route.get('/friends', auth.isLogin, userController.loadFriends)
 
 
 user_route.get('*', function(req, res){
