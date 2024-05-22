@@ -39,13 +39,10 @@
         <li>
         <%= posts[i]['title'] %> 
         <img
-            src="<%= 'http://localhost:4000/'+posts[i]['image'] %>"
-            alt=""
-            width="50px"
-            height="50px"
-            alt=""
-            width="100px"
-            height="100px"
+          src="data:image/jpeg;base64,<%= posts[i]['image'] %>"
+          alt="User image"
+          width="150px"
+          height="150px"
         />
         <%= posts[i]['content'] %>
         </li>

@@ -1,0 +1,55 @@
+<%- include('layouts/header.ejs') %>
+
+<h1>User Profile</h1>
+
+<p><strong>Name:</strong> <%= profUser.name %></p>
+<p><strong>Email:</strong> <%= profUser.email %></p>
+<!-- <p><strong>Role:</strong> <%= profUser.role %></p> -->
+<!-- <p><strong>Status:</strong> <%= profUser.is_online %></p> -->
+<!-- <p><strong>Friends:</strong> <%= profUser.friends.length %></p> -->
+
+<h2>Profile Image</h2>
+<img
+    src="data:jpeg;base64,<%= profUser.image %>"
+    alt="User image"
+    width="150px"
+    height="150px"
+/>
+
+<h2>Музыка:</h2>
+<ul>
+  <% profUser.music.forEach(function(music) { %>
+  <li>
+    <audio controls>
+      <source src="data:audio/mp3;base64,<%= music %>" type="audio/mp3" />
+      Your browser does not support the audio element.
+    </audio>
+  </li>
+  <% }) %>
+</ul>
+
+<%if (status == "friend-request") {%>
+    <p style="color:blue;">friend request already send</p>
+<%} else if (status == "friend"){%>
+    <p style="color:greenyellow">User is your friend</p>
+<%} else if (status == "user") {%>
+    <form action="/friend-request/<%= profUser._id %>", method="post">
+        <button type="submit">Send request</button>
+    </form>
+<%} else if (status == "you") {%>
+<form action="/profile" method="post" enctype="multipart/form-data">
+  <label for="image">Обновить изображение профиля:</label>
+  <input type="file" name="image" id="image" accept="image/*" required />
+  <button type="submit">Загрузить</button>
+</form>
+
+
+
+<h2>Загрузить музыку:</h2>
+<form action="/upload-music" method="post" enctype="multipart/form-data">
+  <label for="music">Загрузить музыку:</label>
+  <input type="file" name="music" id="music" accept="audio/*" required />
+  <button type="submit">Загрузить</button>
+</form>
+
+<%}%>

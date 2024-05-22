@@ -1,4 +1,11 @@
 const mongoose = require('mongoose');
+const fs = require('fs');
+
+// Specify the file path
+const imagePath = 'C:/Users/Dias/Documents/MCP/chat/public/images/default-avatar.jpg';
+const imageBuffer = fs.readFileSync(imagePath);
+const imageBase64 = imageBuffer.toString('base64');
+
 
 const userSchema = new mongoose.Schema({
     name:{
@@ -11,8 +18,11 @@ const userSchema = new mongoose.Schema({
     },
     image:{
         type:String,
-        required:true
+        default: imageBase64
     },
+    music:[{
+        type: String
+    }],
     password:{
         type:String,
         required:true
@@ -25,6 +35,11 @@ const userSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     }],
+    friendRequests: [{ // Field to store friend requests
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    }],
+
     is_online:{
         type:String,
         default:'0'

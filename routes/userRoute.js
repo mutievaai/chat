@@ -45,17 +45,16 @@ const userController = require('../controllers/userController');
 
 const auth = require('../middlewares/auth')
 
-user_route.get('/register', auth.isLogout, userController.registerLoad);
-user_route.post('/register', upload.single('image'), userController.register);
+user_route.get('/', userController.loadHomepage);
 
-user_route.get('/', auth.isLogout, userController.loadLogin);
-user_route.post('/', userController.login);
+user_route.post('/register', userController.register);
+
+user_route.get('/login', auth.isLogout, userController.loadLogin);
+user_route.post('/login', userController.login);
 user_route.get('/logout', auth.isLogin, userController.logout);
 
-user_route.get('/dashboard', auth.isLogin, userController.loadDashboard)
-user_route.post('/save-chat', userController.saveChat)
-
 user_route.get('/activity', auth.isLogin, userController.loadActivity)
+user_route.get('/activity/add-friend/:userId', auth.isLogin, userController.loadActivity)
 user_route.post('/activity', upload.single('image'), userController.createPost)
 
 user_route.get('/admin', auth.isLogin, userController.loadAllUsers)
@@ -63,7 +62,19 @@ user_route.get('/admin/:userId', auth.isLogin, userController.getUserById);
 user_route.post('/admin/update/:userId', auth.isLogin, userController.updateUser);
 user_route.delete('/admin/delete/:userId', auth.isLogin, userController.deleteUser);
 
+user_route.get('/users', auth.isLogin, userController.loadUsers)
+
+user_route.get('/profile/:userId', auth.isLogin, userController.openProfile)
+user_route.post("/profile",auth.isLogin,upload.single("image"),userController.uploadProfileImage); 
+user_route.post("/upload-music", auth.isLogin, upload.single("music"), userController.uploadMusic);
+  
+user_route.post('/friend-request/:profId', auth.isLogin, userController.sendFriendRequest)
+
 user_route.get('/friends', auth.isLogin, userController.loadFriends)
+user_route.post('/save-chat', userController.saveChat)
+user_route.post('/accept-request/:friendRequestId', auth.isLogin, userController.acceptRequest)
+user_route.post('/decline-request/:friendRequestId', auth.isLogin, userController.declineRequest)
+
 
 
 user_route.get('*', function(req, res){

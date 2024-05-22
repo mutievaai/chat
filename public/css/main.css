@@ -1,5 +1,7 @@
 @import url(modal.css);
 @import url(navbar.css);
+@import url(chat.css);
+@import url(login.css);
 body {
     margin: 0;
     font-family: Arial, sans-serif;

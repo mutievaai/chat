@@ -50,7 +50,7 @@ usp.on("connection", async function (socket) {
         { sender_id: data.sender_id, receiver_id: data.receiver_id },
         { sender_id: data.receiver_id, receiver_id: data.sender_id },
       ]
-    });
+    }).sort({timestamp: 1});
     socket.emit("loadChats", { chats: chats });
   });
 });
