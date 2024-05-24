@@ -100,11 +100,6 @@ user_route.post(
   auth.isLogin,
   userController.updateUserProfile
 );
-// user_route.get(
-//   "/getUserInstruments",
-//   auth.isLogin,
-//   userController.getUserInstruments
-// );
 
 user_route.post(
   "/friend-request/:profId",

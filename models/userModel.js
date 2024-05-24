@@ -34,11 +34,13 @@ const userSchema = new mongoose.Schema(
     languages: [
       {
         type: String,
+        ref: "Languages",
       },
     ],
-    genre: [
+    genres: [
       {
         type: String,
+        ref: "Genres",
       },
     ],
     instruments: [

@@ -3,11 +3,12 @@ const User = require("../models/userModel");
 const Chat = require("../models/chatModel");
 const Post = require("../models/postModel");
 const Instruments = require("../models/instrumentsModel");
-const Positions = require("../models/positionsModel")
+const Positions = require("../models/positionsModel");
+const Genres = require("../models/genresModel");
+const Languages = require("../models/languagesModel");
 const bcrypt = require("bcrypt");
 const fs = require("fs");
 const path = require("path");
-// const bcrypt = require('bcrypt');
 
 const register = async (req, res) => {
   try {
@@ -196,7 +197,9 @@ const openProfile = async (req, res) => {
 
     const profUser = await User.findById(req.params.userId)
       .populate("instruments")
-      .populate("positions");
+      .populate("positions")
+      .populate("genres")
+      .populate("languages");
     if (!profUser) {
       return res.status(400).send("Invalid user ID");
     }
@@ -208,15 +211,18 @@ const openProfile = async (req, res) => {
     } else if (profUser.friendRequests.includes(req.session.user._id)) {
       status = "friend-request";
     }
-    // console.log(profUser.instruments);
     const allInstruments = await Instruments.find({});
     const allPositions = await Positions.find({});
+    const allGenres = await Genres.find({});
+    const allLanguages = await Languages.find({});
     res.render("profile", {
       user: req.session.user,
       profUser: profUser,
       status: status,
       allInstruments: allInstruments,
-      allPositions: allPositions
+      allPositions: allPositions,
+      allGenres: allGenres,
+      allLanguages: allLanguages
     });
   } catch (error) {
     console.error(error.message);
@@ -316,10 +322,14 @@ const updateUserProfile = async (req, res) => {
     const userId = req.session.user._id;
     let selectedInstruments = req.body.instruments; // This will be an array of selected instrument IDs or names
     let selectedPositions = req.body.positions; // This will be an array of selected positions IDs or names
+    let selectedGenres = req.body.genres; // This will be an array of selected genres IDs or names
+    let selectedLanguages = req.body.languages; // This will be an array of selected languages IDs or names
     // Ensure selectedInstruments is an array
     selectedInstruments = Array.isArray(selectedInstruments) ? selectedInstruments : [selectedInstruments];
     selectedPositions = Array.isArray(selectedPositions) ? selectedPositions : [selectedPositions];
-        
+    selectedGenres = Array.isArray(selectedGenres) ? selectedGenres : [selectedGenres];
+    selectedLanguages = Array.isArray(selectedLanguages) ? selectedLanguages : [selectedLanguages];
+
     // Convert instrument names to ObjectIds
     const instrumentIds = await Promise.all(selectedInstruments.map(async (instrumentName) => {
         const instrument = await Instruments.findOne({ name: instrumentName });
@@ -331,12 +341,28 @@ const updateUserProfile = async (req, res) => {
       const position = await Positions.findOne({ name: positionName });
       return position ? position._id : null;
   }));
+
+      // Convert genres names to ObjectIds
+      const genreIds = await Promise.all(selectedGenres.map(async (genreName) => {
+        const genre = await Genres.findOne({ name: genreName });
+        return genre ? genre._id : null;
+    }));
+    
+      // Convert languages names to ObjectIds
+      const languageIds = await Promise.all(selectedLanguages.map(async (languageName) => {
+        const language = await Languages.findOne({ name: languageName });
+        return language ? language._id : null;
+    }));
+
     // Filter out null values
     const validInstrumentIds = instrumentIds.filter(id => id !== null);
     const validPositionIds = positionIds.filter(id => id !== null);
+    const validGenreIds = genreIds.filter(id => id !== null);
+    const validLanguageIds = languageIds.filter(id => id !== null);
 
-    // Update the user's instruments
-    await User.findByIdAndUpdate(userId, { instruments: validInstrumentIds, positions: validPositionIds });
+
+    // Update the user's tags
+    await User.findByIdAndUpdate(userId, { instruments: validInstrumentIds, positions: validPositionIds, genres: validGenreIds, languages: validLanguageIds });
     
     res.redirect(`/profile/${userId}`);
   } catch (error) {

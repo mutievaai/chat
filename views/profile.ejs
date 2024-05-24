@@ -7,12 +7,12 @@
 <p><strong>Email:</strong> <%= profUser.email %></p>
 
 <h2>Profile Image</h2>
-<img
-  src="data:jpeg;base64,<%= profUser.image %>"
-  alt="User image"
-  width="150px"
-  height="150px"
-/>
+  <img
+    src="data:jpeg;base64,<%= profUser.image %>"
+    alt="User image"
+    width="150px"
+    height="150px"
+  />
 
 <% if (status == "you") { %>
 <form action="/profile" method="post" enctype="multipart/form-data">
@@ -23,90 +23,133 @@
 <% } %>
 
 <h2>Audio:</h2>
-<ul>
-  <% profUser.music.forEach(function(music, index) { %>
-  <li>
-    <audio controls>
-      <source src="data:audio/mp3;base64,<%= music %>" type="audio/mp3" />
-      Your browser does not support the audio element.
-    </audio>
-    <% if (status == "you") { %>
-    <form
-      action="/delete-music/<%= profUser._id %>/<%= index %>"
-      method="post"
-      style="display: inline"
-    >
-      <button type="submit">Удалить</button>
-    </form>
-    <% } %>
-  </li>
-  <% }) %>
-</ul>
+  <ul>
+    <% profUser.music.forEach(function(music, index) { %>
+    <li>
+      <audio controls>
+        <source src="data:audio/mp3;base64,<%= music %>" type="audio/mp3" />
+        Your browser does not support the audio element.
+      </audio>
+      <% if (status == "you") { %>
+        <form
+          action="/delete-music/<%= profUser._id %>/<%= index %>"
+          method="post"
+          style="display: inline">
+          <button type="submit">Удалить</button>
+        </form>
+      <% } %>
+    </li>
+    <% }) %>
+  </ul>
 
 <% if (status == "you") { %>
-<h2>Загрузить музыку:</h2>
-<form action="/upload-music" method="post" enctype="multipart/form-data">
-  <label for="music">Загрузить музыку:</label>
-  <input type="file" name="music" id="music" accept="audio/*" required />
-  <button type="submit">Загрузить</button>
-</form>
+  <h2>Загрузить музыку:</h2>
+  <form action="/upload-music" method="post" enctype="multipart/form-data">
+    <label for="music">Загрузить музыку:</label>
+    <input type="file" name="music" id="music" accept="audio/*" required />
+    <button type="submit">Загрузить</button>
+  </form>
 <% } %>
 
 <h2>Musical instruments:</h2>
+<p><%= profUser.instruments %></p>
+<p><%= profUser.positions %></p>
+<p><%= profUser.genres %></p>
+<p><%= profUser.languages %></p>
+
 
 <%if (status == "friend-request") {%>
-<p style="color: blue">friend request already send</p>
+  <p style="color: blue">friend request already send</p>
 <%} else if (status == "friend"){%>
-<p style="color: greenyellow">User is your friend</p>
+  <p style="color: greenyellow">User is your friend</p>
 <%} else if (status == "user") {%>
-<form action="/friend-request/<%= profUser._id %>" , method="post">
-  <button type="submit">Send request</button>
-</form>
+  <form action="/friend-request/<%= profUser._id %>" , method="post">
+    <button type="submit">Send request</button>
+  </form>
 <%} else if (status == "you") {%>
-<p><%= profUser.instruments %></p>
-<h5>Instruments</h5>
-
 <form id="profile-form" action="/updateUserProfile" method="POST">
-  <select
-    class="select-class"
-    name="instruments"
-    multiple="multiple"
-    style="width: 300px"
-  >
-    <% for(let i = 0; i < allInstruments.length; i ++){ %>
-      <% const instrument = allInstruments[i]; %>
-      <option
-        id="<%=instrument._id %>"
-        value="<%= instrument.name %>"
-        <%if (profUser.instruments.some(instrumentRef => instrumentRef.equals(instrument._id)) ){%>
-          selected 
-        <%}%> 
-      > 
-        <%=allInstruments[i]['name']%>
-      </option>
-    <% } %>
-  </select>
+  <h5>Instruments</h5>
+    <select
+      class="select-class"
+      name="instruments"
+      multiple="multiple"
+      style="width: 300px"
+    >
+      <% for(let i = 0; i < allInstruments.length; i ++){ %>
+        <% const instrument = allInstruments[i]; %>
+        <option
+          id="<%=instrument._id %>"
+          value="<%= instrument.name %>"
+          <%if (profUser.instruments.some(instrumentRef => instrumentRef.equals(instrument._id)) ){%>
+            selected 
+          <%}%> 
+        > 
+          <%=allInstruments[i]['name']%>
+        </option>
+      <% } %>
+    </select>
   
   <h5>Positions</h5>
-  <select
-    class="select-class"
-    name="positions"
-    multiple="multiple"
-    style="width: 300px"
-  >
-    <% for(let i = 0; i < allPositions.length; i ++){ %>
-      <% const position = allPositions[i]; %>
-      <option
-        id="<%=position._id %>"
-        value="<%= position.name %>"
-        <%if (profUser.positions.some(positionRef => positionRef.equals(position._id)) ){%>
-          selected 
-        <%}%> 
-      > 
-        <%=allPositions[i]['name']%>
-      </option>
-    <% } %>
-  </select>
+    <select
+      class="select-class"
+      name="positions"
+      multiple="multiple"
+      style="width: 300px"
+    >
+      <% for(let i = 0; i < allPositions.length; i ++){ %>
+        <% const position = allPositions[i]; %>
+        <option
+          id="<%=position._id %>"
+          value="<%= position.name %>"
+          <%if (profUser.positions.some(positionRef => positionRef.equals(position._id)) ){%>
+            selected 
+          <%}%> 
+        > 
+          <%=allPositions[i]['name']%>
+        </option>
+      <% } %>
+    </select>
+
+    <h5>Genres</h5>
+    <select
+      class="select-class"
+      name="genres"
+      multiple="multiple"
+      style="width: 300px"
+    >
+      <% for(let i = 0; i < allGenres.length; i ++){ %>
+        <% const genre = allGenres[i]; %>
+        <option
+          id="<%=genre._id %>"
+          value="<%= genre.name %>"
+          <%if (profUser.genres.some(genreRef => genreRef.equals(genre._id)) ){%>
+            selected 
+          <%}%> 
+        > 
+          <%=allGenres[i]['name']%>
+        </option>
+      <% } %>
+    </select>
+    <h5>Languages</h5>
+    <select
+      class="select-class"
+      name="languages"
+      multiple="multiple"
+      style="width: 300px"
+    >
+      <% for(let i = 0; i < allLanguages.length; i ++){ %>
+        <% const language = allLanguages[i]; %>
+        <option
+          id="<%=language._id %>"
+          value="<%= language.name %>"
+          <%if (profUser.languages.some(languageRef => languageRef.equals(language._id)) ){%>
+            selected 
+          <%}%> 
+        > 
+          <%=allLanguages[i]['name']%>
+        </option>
+      <% } %>
+    </select>
   <button class="save-button" type="submit" style="display: none">Save Changes</button>
     <!-- Edit button -->
 </form>
