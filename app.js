@@ -1,7 +1,8 @@
 require("dotenv").config();
 
 var mongoose = require("mongoose");
-const url = "mongodb+srv://kambardias4:admin789@cluster0.tfpxkjo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+const url =
+  "mongodb+srv://kambardias4:admin789@cluster0.tfpxkjo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 mongoose.connect(url);
 
 const app = require("express")();
@@ -49,8 +50,8 @@ usp.on("connection", async function (socket) {
       $or: [
         { sender_id: data.sender_id, receiver_id: data.receiver_id },
         { sender_id: data.receiver_id, receiver_id: data.sender_id },
-      ]
-    }).sort({timestamp: 1});
+      ],
+    }).sort({ timestamp: 1 });
     socket.emit("loadChats", { chats: chats });
   });
 });

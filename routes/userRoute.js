@@ -95,6 +95,16 @@ user_route.post(
   "/delete-music/:userId/:musicIndex",
   userController.deleteMusic
 );
+user_route.post(
+  "/updateUserProfile",
+  auth.isLogin,
+  userController.updateUserProfile
+);
+// user_route.get(
+//   "/getUserInstruments",
+//   auth.isLogin,
+//   userController.getUserInstruments
+// );
 
 user_route.post(
   "/friend-request/:profId",

@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const User = require("../models/userModel");
 const Chat = require("../models/chatModel");
 const Post = require("../models/postModel");
+const Instruments = require("../models/instrumentsModel");
+const Positions = require("../models/positionsModel")
 const bcrypt = require("bcrypt");
 const fs = require("fs");
 const path = require("path");
@@ -192,7 +194,9 @@ const openProfile = async (req, res) => {
     }
     // const user = await User.findById(req.session.user._id)
 
-    const profUser = await User.findById(req.params.userId);
+    const profUser = await User.findById(req.params.userId)
+      .populate("instruments")
+      .populate("positions");
     if (!profUser) {
       return res.status(400).send("Invalid user ID");
     }
@@ -204,14 +208,15 @@ const openProfile = async (req, res) => {
     } else if (profUser.friendRequests.includes(req.session.user._id)) {
       status = "friend-request";
     }
-    // const user = await User.findById(req.session.user._id)
-    // if (!user) {
-    //     return res.status(404).send('User not found2');
-    // }
+    // console.log(profUser.instruments);
+    const allInstruments = await Instruments.find({});
+    const allPositions = await Positions.find({});
     res.render("profile", {
       user: req.session.user,
       profUser: profUser,
       status: status,
+      allInstruments: allInstruments,
+      allPositions: allPositions
     });
   } catch (error) {
     console.error(error.message);
@@ -303,6 +308,40 @@ const deleteMusic = async (req, res) => {
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Internal Server Error");
+  }
+};
+
+const updateUserProfile = async (req, res) => {
+  try {
+    const userId = req.session.user._id;
+    let selectedInstruments = req.body.instruments; // This will be an array of selected instrument IDs or names
+    let selectedPositions = req.body.positions; // This will be an array of selected positions IDs or names
+    // Ensure selectedInstruments is an array
+    selectedInstruments = Array.isArray(selectedInstruments) ? selectedInstruments : [selectedInstruments];
+    selectedPositions = Array.isArray(selectedPositions) ? selectedPositions : [selectedPositions];
+        
+    // Convert instrument names to ObjectIds
+    const instrumentIds = await Promise.all(selectedInstruments.map(async (instrumentName) => {
+        const instrument = await Instruments.findOne({ name: instrumentName });
+        return instrument ? instrument._id : null;
+    }));
+    
+    // Convert positions names to ObjectIds
+    const positionIds = await Promise.all(selectedPositions.map(async (positionName) => {
+      const position = await Positions.findOne({ name: positionName });
+      return position ? position._id : null;
+  }));
+    // Filter out null values
+    const validInstrumentIds = instrumentIds.filter(id => id !== null);
+    const validPositionIds = positionIds.filter(id => id !== null);
+
+    // Update the user's instruments
+    await User.findByIdAndUpdate(userId, { instruments: validInstrumentIds, positions: validPositionIds });
+    
+    res.redirect(`/profile/${userId}`);
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({ error: "Server Error" });
   }
 };
 
@@ -416,6 +455,7 @@ module.exports = {
   openProfile, // profile
   uploadMusic, // profile
   deleteMusic, // profile
+  updateUserProfile, //prfile
   uploadProfileImage, // profile
   loadUsers, // Users
 };

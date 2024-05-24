@@ -25,6 +25,28 @@ const userSchema = new mongoose.Schema(
         type: String,
       },
     ],
+    positions: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Positions",
+      },
+    ],
+    languages: [
+      {
+        type: String,
+      },
+    ],
+    genre: [
+      {
+        type: String,
+      },
+    ],
+    instruments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Instruments",
+      },
+    ],
     password: {
       type: String,
       required: true,
