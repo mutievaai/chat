@@ -52,18 +52,17 @@
 <% } %>
 
 <h2>Musical instruments:</h2>
-<p><%= profUser.instruments %></p>
-<p><%= profUser.positions %></p>
-<p><%= profUser.genres %></p>
-<p><%= profUser.languages %></p>
-
+<p><%= profUser.instruments.map(instrument => instrument.name).join(', ') %></p>
+<p><%= profUser.positions.map(position => position.name).join(', ') %></p>
+<p><%= profUser.genres.map(genre => genre.name).join(', ') %></p>
+<p><%= profUser.languages.map(language => language.name).join(', ') %></p>
 
 <%if (status == "friend-request") {%>
-  <p style="color: blue">friend request already send</p>
+  <p style="color: blue">friend request already sent</p>
 <%} else if (status == "friend"){%>
   <p style="color: greenyellow">User is your friend</p>
 <%} else if (status == "user") {%>
-  <form action="/friend-request/<%= profUser._id %>" , method="post">
+  <form action="/friend-request/<%= profUser._id %>" method="post">
     <button type="submit">Send request</button>
   </form>
 <%} else if (status == "you") {%>
@@ -75,18 +74,16 @@
       multiple="multiple"
       style="width: 300px"
     >
-      <% for(let i = 0; i < allInstruments.length; i ++){ %>
-        <% const instrument = allInstruments[i]; %>
+      <% allInstruments.forEach(instrument => { %>
         <option
-          id="<%=instrument._id %>"
           value="<%= instrument.name %>"
-          <%if (profUser.instruments.some(instrumentRef => instrumentRef.equals(instrument._id)) ){%>
+          <%if (profUser.instruments.some(instrumentRef => instrumentRef.name === instrument.name)) { %>
             selected 
-          <%}%> 
+          <% } %> 
         > 
-          <%=allInstruments[i]['name']%>
+          <%= instrument.name %>
         </option>
-      <% } %>
+      <% }) %>
     </select>
   
   <h5>Positions</h5>
@@ -96,18 +93,16 @@
       multiple="multiple"
       style="width: 300px"
     >
-      <% for(let i = 0; i < allPositions.length; i ++){ %>
-        <% const position = allPositions[i]; %>
+      <% allPositions.forEach(position => { %>
         <option
-          id="<%=position._id %>"
           value="<%= position.name %>"
-          <%if (profUser.positions.some(positionRef => positionRef.equals(position._id)) ){%>
+          <%if (profUser.positions.some(positionRef => positionRef.name === position.name)) { %>
             selected 
-          <%}%> 
+          <% } %> 
         > 
-          <%=allPositions[i]['name']%>
+          <%= position.name %>
         </option>
-      <% } %>
+      <% }) %>
     </select>
 
     <h5>Genres</h5>
@@ -117,19 +112,18 @@
       multiple="multiple"
       style="width: 300px"
     >
-      <% for(let i = 0; i < allGenres.length; i ++){ %>
-        <% const genre = allGenres[i]; %>
+      <% allGenres.forEach(genre => { %>
         <option
-          id="<%=genre._id %>"
           value="<%= genre.name %>"
-          <%if (profUser.genres.some(genreRef => genreRef.equals(genre._id)) ){%>
+          <%if (profUser.genres.some(genreRef => genreRef.name === genre.name)) { %>
             selected 
-          <%}%> 
+          <% } %> 
         > 
-          <%=allGenres[i]['name']%>
+          <%= genre.name %>
         </option>
-      <% } %>
+      <% }) %>
     </select>
+
     <h5>Languages</h5>
     <select
       class="select-class"
@@ -137,18 +131,16 @@
       multiple="multiple"
       style="width: 300px"
     >
-      <% for(let i = 0; i < allLanguages.length; i ++){ %>
-        <% const language = allLanguages[i]; %>
+      <% allLanguages.forEach(language => { %>
         <option
-          id="<%=language._id %>"
           value="<%= language.name %>"
-          <%if (profUser.languages.some(languageRef => languageRef.equals(language._id)) ){%>
+          <%if (profUser.languages.some(languageRef => languageRef.name === language.name)) { %>
             selected 
-          <%}%> 
+          <% } %> 
         > 
-          <%=allLanguages[i]['name']%>
+          <%= language.name %>
         </option>
-      <% } %>
+      <% }) %>
     </select>
   <button class="save-button" type="submit" style="display: none">Save Changes</button>
     <!-- Edit button -->
