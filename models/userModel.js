@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const fs = require("fs");
+const { resetPassword } = require("../controllers/userController");
 
 // Specify the file path
 const imagePath = "public/images/default-avatar.jpg";
@@ -52,6 +53,12 @@ const userSchema = new mongoose.Schema(
     password: {
       type: String,
       required: true,
+    },
+    resetPasswordToken:{
+      type: String,
+    },
+    resetPasswordExpires:{
+      type: Date,
     },
     role: {
       type: String,

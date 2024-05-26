@@ -7,8 +7,11 @@ const Positions = require("../models/positionsModel");
 const Genres = require("../models/genresModel");
 const Languages = require("../models/languagesModel");
 const bcrypt = require("bcrypt");
+const crypto = require('crypto');
 const fs = require("fs");
 const path = require("path");
+const nodemailer = require('nodemailer');
+
 
 const register = async (req, res) => {
   try {
@@ -68,6 +71,86 @@ const login = async (req, res) => {
     console.log(error.message);
   }
 };
+
+const forgotPassword = async (req, res) => { //1
+  try{
+    res.render("forgotPassword", {message:""});
+  }catch(error){
+    console.log(error.message)
+  }
+}
+
+const requestPasswordReset = async (req, res) => {  //2
+  const userEmail = req.body.email;
+  console.log("request Password email " + userEmail)
+  const user = await User.findOne({email:userEmail})
+  // console.log(user)
+  if(!user){
+    return res.status(400).send({ message: 'User with this email does not exist.' });
+  }
+  const resetToken = crypto.randomBytes(32).toString('hex');
+  const resetTokenExpires = Date.now() + 3600000; // 1 hour
+
+  user.resetPasswordToken = resetToken;
+  user.resetPasswordExpires = resetTokenExpires;
+  await user.save();
+
+  // Send the email
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.ethereal.email',
+    port: 587,
+    auth: {
+      user: 'kiel.hodkiewicz@ethereal.email',
+      pass: 'WsrwAg4gua2mTd43YJ',
+    }
+  });
+  const mailOptions = {
+    from: 'kambardias4@example.com',
+    to: user.email,
+    subject: 'Password Reset Music Collaboration Platform',
+    text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n
+            Please click on the following link, or paste this into your browser to complete the process within one hour of receiving it:\n\n
+            http://localhost:4000/resetPassword/${resetToken}\n\n
+            If you did not request this, please ignore this email and your password will remain unchanged.\n`,
+  };
+
+  transporter.sendMail(mailOptions, (err) => {
+    if (err) {
+      return res.status(500).send({ message: 'Error sending email.' });
+    }
+    res.status(200).send({ message: 'Password reset email sent.' });
+  });
+
+}
+const resetPasswordPage = async (req, res) =>{ //3
+  try{
+    res.render('resetPasswordPage', {message:""});
+  }catch(error){
+    console.log(error.message)
+  }
+}
+const resetPassword = async (req, res) => { //4
+  const { token } = req.params;
+  const { newPassword } = req.body;
+
+  const user = await User.findOne({
+    resetPasswordToken: token,
+    resetPasswordExpires: { $gt: Date.now() },
+  });
+
+  if (!user) {
+    return res.status(400).send({message:'Password reset token is invalid or has expired.'});
+  }
+  const passwordHash = await bcrypt.hash(newPassword, 10);
+
+  user.password = passwordHash;
+  user.resetPasswordToken = undefined;
+  user.resetPasswordExpires = undefined;
+  await user.save();
+
+  res.status(200).send({message:'Password has been reset.'});
+};
+
 
 const logout = async (req, res) => {
   try {
@@ -484,4 +567,8 @@ module.exports = {
   updateUserProfile, //prfile
   uploadProfileImage, // profile
   loadUsers, // Users
+  forgotPassword,
+  resetPassword,
+  requestPasswordReset,
+  resetPasswordPage
 };

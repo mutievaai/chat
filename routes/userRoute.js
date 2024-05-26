@@ -55,6 +55,11 @@ user_route.get("/login", auth.isLogout, userController.loadLogin);
 user_route.post("/login", userController.login);
 user_route.get("/logout", auth.isLogin, userController.logout);
 
+user_route.get('/forgotPassword', auth.isLogout, userController.forgotPassword);
+user_route.post('/forgotPassword', auth.isLogout, userController.requestPasswordReset);
+user_route.get('/resetPassword/:token', auth.isLogout, userController.resetPasswordPage)
+;user_route.post('/resetPassword/:token', auth.isLogout, userController.resetPassword);
+
 user_route.get("/activity", auth.isLogin, userController.loadActivity);
 user_route.get(
   "/activity/add-friend/:userId",
