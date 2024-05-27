@@ -122,7 +122,6 @@
                       <button class="save-button" type="submit" style="display: none">Save Changes</button>
 
                     </form>
-
                   <%}else{%>
                     <li><b>Musical instruments:</b> <%= profUser.instruments.map(instrument => instrument.name).join(', ') %></li>
                     <li><b>Musical positions:</b> <%= profUser.positions.map(position => position.name).join(', ') %></li>

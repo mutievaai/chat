@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       default: imageBase64,
     },
+    city: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Cities",
+    },
     music: [
       {
         type: String,
