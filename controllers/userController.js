@@ -6,6 +6,7 @@ const Instruments = require("../models/instrumentsModel");
 const Positions = require("../models/positionsModel");
 const Genres = require("../models/genresModel");
 const Languages = require("../models/languagesModel");
+const Cities = require("../models/citiesModel");
 const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const fs = require("fs");
@@ -294,7 +295,8 @@ const openProfile = async (req, res) => {
       .populate("instruments")
       .populate("positions")
       .populate("genres")
-      .populate("languages");
+      .populate("languages")
+      .populate("city");
     if (!profUser) {
       return res.status(400).send("Invalid user ID");
     }
@@ -310,6 +312,7 @@ const openProfile = async (req, res) => {
     const allPositions = await Positions.find({});
     const allGenres = await Genres.find({});
     const allLanguages = await Languages.find({});
+    const allCities = await Cities.find({});
     res.render("profile", {
       user: req.session.user,
       profUser: profUser,
@@ -317,7 +320,8 @@ const openProfile = async (req, res) => {
       allInstruments: allInstruments,
       allPositions: allPositions,
       allGenres: allGenres,
-      allLanguages: allLanguages
+      allLanguages: allLanguages,
+      allCities: allCities
     });
   } catch (error) {
     console.error(error.message);
@@ -419,6 +423,7 @@ const updateUserProfile = async (req, res) => {
     let selectedPositions = req.body.positions; // This will be an array of selected positions IDs or names
     let selectedGenres = req.body.genres; // This will be an array of selected genres IDs or names
     let selectedLanguages = req.body.languages; // This will be an array of selected languages IDs or names
+    let selectedCity = req.body.city; // This will be an array of selected cities IDs or names
     // Ensure selectedInstruments is an array
     selectedInstruments = Array.isArray(selectedInstruments) ? selectedInstruments : [selectedInstruments];
     selectedPositions = Array.isArray(selectedPositions) ? selectedPositions : [selectedPositions];
@@ -448,6 +453,10 @@ const updateUserProfile = async (req, res) => {
         const language = await Languages.findOne({ name: languageName });
         return language ? language._id : null;
     }));
+      // Convert cities name to ObjectId
+      const city = await Cities.findOne({ name: selectedCity });
+      const cityId = city ? city._id : null;
+    
 
     // Filter out null values
     const validInstrumentIds = instrumentIds.filter(id => id !== null);
@@ -455,9 +464,10 @@ const updateUserProfile = async (req, res) => {
     const validGenreIds = genreIds.filter(id => id !== null);
     const validLanguageIds = languageIds.filter(id => id !== null);
 
+    console.log('Valid City IDs:', cityId);
 
     // Update the user's tags
-    await User.findByIdAndUpdate(userId, { instruments: validInstrumentIds, positions: validPositionIds, genres: validGenreIds, languages: validLanguageIds });
+    await User.findByIdAndUpdate(userId, { instruments: validInstrumentIds, positions: validPositionIds, genres: validGenreIds, languages: validLanguageIds, city: cityId });
     
     res.redirect(`/profile/${userId}`);
   } catch (error) {
@@ -547,7 +557,6 @@ const declineRequest = async (req, res) => {
 
     // Save changes to the current user
     await currentUser.save();
-
     // Redirect to friends page after successfully declining the friend request
     res.redirect("/friends");
   } catch (error) {

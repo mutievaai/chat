@@ -19,9 +19,9 @@
 
 <% if (status == "you") { %>
 <form action="/profile" method="post" enctype="multipart/form-data">
-  <label for="image">Обновить изображение профиля:</label>
+  <label for="image">Update user profile image:</label>
   <input type="file" name="image" id="image" accept="image/*" required />
-  <button type="submit">Загрузить</button>
+  <button type="submit">Upload</button>
 </form>
 <% } %>
 
@@ -38,7 +38,7 @@
           action="/delete-music/<%= profUser._id %>/<%= index %>"
           method="post"
           style="display: inline">
-          <button type="submit">Удалить</button>
+          <button type="submit">Delete</button>
         </form>
       <% } %>
     </li>
@@ -46,18 +46,22 @@
   </ul>
 
 <% if (status == "you") { %>
-  <h2>Загрузить музыку:</h2>
+  <h2>Upload audio:</h2>
   <form action="/upload-music" method="post" enctype="multipart/form-data">
-    <label for="music">Загрузить музыку:</label>
+    <label for="music">Upload audio:</label>
     <input type="file" name="music" id="music" accept="audio/*" required />
-    <button type="submit">Загрузить</button>
+    <button type="submit">Upload</button>
   </form>
 <% } %>
-
+<h3>City:</h3>
+<p><%= profUser.city ? profUser.city.name : "City not specified" %></p>
 <h2>Musical instruments:</h2>
 <p><%= profUser.instruments.map(instrument => instrument.name).join(', ') %></p>
+<h2>Roles:</h2>
 <p><%= profUser.positions.map(position => position.name).join(', ') %></p>
+<h2>Musical genres:</h2>
 <p><%= profUser.genres.map(genre => genre.name).join(', ') %></p>
+<h2>Preferred languages:</h2>
 <p><%= profUser.languages.map(language => language.name).join(', ') %></p>
 
 <%if (status == "friend-request") {%>
@@ -70,6 +74,21 @@
   </form>
 <%} else if (status == "you") {%>
 <form id="profile-form" action="/updateUserProfile" method="POST">
+  <h5>City</h5>
+  <select class="select-class" name="city" style="width: 300px">
+    <% allCities.forEach(city => { %>
+      <option value="<%= city.name %>" 
+        <% if (profUser.city && profUser.city.name === city.name) { %> 
+          selected 
+        <% } %> 
+      > 
+        <%= city.name %>
+      </option>
+    <% }) %>
+  </select>
+  
+  
+  
   <h5>Instruments</h5>
     <select
       class="select-class"
@@ -89,7 +108,7 @@
       <% }) %>
     </select>
   
-  <h5>Positions</h5>
+  <h5>Roles</h5>
     <select
       class="select-class"
       name="positions"
