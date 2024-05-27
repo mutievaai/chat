@@ -15,11 +15,15 @@ $(document).ready(function () {
             $(".start-head").show();
             $(".chat-section").hide();
             receiver_id = null;
+            $(this).removeClass("active-user"); // Remove highlight from the user
         } else {
             receiver_id = userId;
             $(".start-head").hide();
             $(".chat-section").show();
             socket.emit("existsChat", { sender_id, receiver_id });
+
+            $(".user-list").removeClass("active-user"); // Remove highlight from all users
+            $(this).addClass("active-user"); // Highlight the selected user
         }
     });
 
@@ -35,7 +39,7 @@ $(document).ready(function () {
             success: (response) => {
                 if (response.success) {
                     $("#message").val("");
-                    const chatHtml = `<div class="current-user-chat"><h5>${response.data.message}</h5></div>`;
+                    const chatHtml = `<div class="message current-user-chat"><h5>${response.data.message}</h5></div>`;
                     $("#chat-container").append(chatHtml);
                     socket.emit("newChat", response.data);
                 } else {
@@ -47,7 +51,7 @@ $(document).ready(function () {
 
     socket.on("loadNewChat", (data) => {
         if (sender_id === data.receiver_id && receiver_id === data.sender_id) {
-            const chatHtml = `<div class="distance-user-chat"><h5>${data.message}</h5></div>`;
+            const chatHtml = `<div class="message distance-user-chat"><h5>${data.message}</h5></div>`;
             $("#chat-container").append(chatHtml);
         }
     });
@@ -59,7 +63,7 @@ $(document).ready(function () {
 
         chats.forEach((chat) => {
             const chatClass = chat.sender_id === sender_id ? "current-user-chat" : "distance-user-chat";
-            chatHtml += `<div class="${chatClass}"><h5>${chat.message}</h5></div>`;
+            chatHtml += `<div class="message ${chatClass}"><h5>${chat.message}</h5></div>`;
         });
 
         $("#chat-container").append(chatHtml);

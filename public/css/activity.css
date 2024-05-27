@@ -54,6 +54,16 @@ button:hover {
 }
 
 /* Post Styles */
+a {
+    text-decoration: none;
+}
+
+/* Specific styling for the post-link */
+.post-link {
+    display: block;
+    color: inherit; /* Inherit the color from the parent element */
+}
+
 .list-group {
     width: 100%;
     border-radius: 5px;

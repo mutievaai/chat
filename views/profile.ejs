@@ -1,5 +1,8 @@
-<% include('layouts/header.ejs') %>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+<head> 
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+</head> 
+<%- include('layouts/header.ejs') %>
 
 <h1>User Profile</h1>
 
@@ -115,7 +118,7 @@
       <% allGenres.forEach(genre => { %>
         <option
           value="<%= genre.name %>"
-          <%if (profUser.genres.some(genreRef => genreRef.name === genre.name)) { %>
+          <% if (profUser.genres.some(genreRef => genreRef.name === genre.name)) { %>
             selected 
           <% } %> 
         > 

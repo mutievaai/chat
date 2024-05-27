@@ -56,17 +56,14 @@ user_route.post("/login", userController.login);
 user_route.get("/logout", auth.isLogin, userController.logout);
 
 user_route.get('/forgotPassword', auth.isLogout, userController.forgotPassword);
-user_route.post('/forgotPassword', auth.isLogout, userController.requestPasswordReset);
+user_route.post('/forgotPassword  ', auth.isLogout, userController.requestPasswordReset);
 user_route.get('/resetPassword/:token', auth.isLogout, userController.resetPasswordPage)
 ;user_route.post('/resetPassword/:token', auth.isLogout, userController.resetPassword);
 
-user_route.get("/activity", auth.isLogin, userController.loadActivity);
-user_route.get(
-  "/activity/add-friend/:userId",
-  auth.isLogin,
-  userController.loadActivity
-);
-user_route.post("/activity", upload.single("image"), userController.createPost);
+user_route.get("/activity", auth.isLogin, userController.loadActivity);         //open all posts
+user_route.get("/post/:postId", auth.isLogin, userController.openPost);           //open post id
+user_route.post("/activity", upload.single("image"), userController.createPost);// create post
+
 
 user_route.get("/admin", auth.isLogin, userController.loadAllUsers);
 user_route.get("/admin/:userId", auth.isLogin, userController.getUserById);

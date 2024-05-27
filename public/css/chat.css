@@ -1,22 +1,70 @@
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden; /* Prevent body scrolling */
 }
 
 .container-fluid {
     display: flex;
-    height: 100vh;
+    height: 100%;
+    margin: 0;
+    padding: 0;
 }
 
-.sidebar {
-    background-color: #f8f9fa;
-    border-right: 1px solid #ccc;
-    overflow-y: auto;
+.full-height {
+    height: 100%;
+}
+
+.full-width {
+    width: 100%;
+}
+
+
+.active-user {
+    background-color: #e0e0e0; /* Highlight background color */
+    border-left: 5px solid #007bff; /* Highlight with a left border */
+}
+
+#contacts-section {
+    background-color: #83b2b9; /* Red for illustration */
+    overflow-y: auto; /* Enable scrolling within the contacts section */
     padding: 20px;
+}
+/* Custom scrollbar styles */
+#contacts::-webkit-scrollbar {
+    width: 2px; /* Width of the scrollbar */
+}
+
+#contacts::-webkit-scrollbar-track {
+    background: #c9c9c9; /* Background of the scrollbar track */
+    border-radius: 10px;
+}
+
+#contacts::-webkit-scrollbar-thumb {
+    background: #888; /* Scrollbar color */
+    border-radius: 10px;
+}
+
+#contacts::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Scrollbar color on hover */
+}
+
+#chat-section {
+    background-color: #0000ff; /* Blue for illustration */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 20px;
+    overflow: hidden; /* Prevent scrolling within the chat section */
 }
 
 .sidebar .list-group-item {
     display: flex;
-    align-items: center;
+    /* align-items: center; */
     margin-bottom: 10px;
 }
 
@@ -27,44 +75,84 @@ body {
     height: 50px;
 }
 
-.chat-window {
+.chat-section {
     display: flex;
     flex-direction: column;
-    padding: 20px;
-}
-
-.chat-section {
-    display: none;
-    flex-grow: 1;
-    flex-direction: column;
+    height: 100%;
 }
 
 #chat-container {
     flex-grow: 1;
-    overflow-y: auto;
+    overflow-y: auto; /* Enable scrolling within the chat messages */
     margin-bottom: 20px;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-
-.current-user-chat {
-    text-align: right;
-    margin-bottom: 10px;
+/* Custom scrollbar styles */
+#chat-container::-webkit-scrollbar {
+    width: 2px; /* Width of the scrollbar */
 }
 
-.distance-user-chat {
-    text-align: left;
-    margin-bottom: 10px;
+#chat-container::-webkit-scrollbar-track {
+    background: #c9c9c9; /* Background of the scrollbar track */
+    border-radius: 10px;
+}
+
+#chat-container::-webkit-scrollbar-thumb {
+    background: #888; /* Scrollbar color */
+    border-radius: 10px;
+}
+
+#chat-container::-webkit-scrollbar-thumb:hover {
+    background: #555; /* Scrollbar color on hover */
+}
+
+.form-container {
+    padding-bottom: 20px; /* Add space below the input message */
 }
 
 #chat-form {
     display: flex;
+    width: 100%;
+
 }
 
 #chat-form input[type="text"] {
     flex-grow: 1;
     margin-right: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+#chat-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+}
+.message {
+    /*display: inline-block; /*Make the width adjust to content */
+    padding: 4px;
+    margin: 4px 0;
+    border-radius: 10px; /* Border radius for rounded corners */
+    background-color: #f1f1f1; /* Background color for messages */
+    /* max-width: 70%; Limit the max width of the messages */
+    word-wrap: break-word; /* Ensure long words break to the next line */
+    max-width: 60%;
+    clear: both;
+}
+
+.current-user-chat {
+    float: right; /* Align to the right */
+    text-align: right;
+    background-color: #90efc4; /* Different background for current user */
+    margin-bottom: 10px;
+}
+
+.distance-user-chat {
+    float: left; /* Align to the left */
+    text-align: left;
+    background-color: #f8d7da; /* Different background for other users */
+    margin-bottom: 10px;
 }
 
 .start-head {

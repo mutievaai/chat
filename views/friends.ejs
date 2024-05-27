@@ -1,9 +1,13 @@
 <%- include('layouts/header.ejs') %>
+<head> 
+    <link rel="stylesheet" href="/css/navbar.css">
+    <link rel="stylesheet" href="/css/chat.css">
+</head> 
 
 <div class="container-fluid">
-    <div class="row">
+    <div class="row no-gutters">
         <!-- Left Sidebar -->
-        <div class="col-md-4 sidebar">
+        <div class="col-md-4 sidebar full-height" id="contacts-section">
             <h2 class="mb-4">Hi, <%= user.name %></h2>
 
             <% if (friendRequests.length > 0) { %>
@@ -40,13 +44,16 @@
         </div>
 
         <!-- Chat Window -->
-        <div class="col-md-8 chat-window">
-            <h3 class="start-head">Click to start the chat</h3>
-            <div class="chat-section">
-                <div id="chat-container"></div>
-                <form id="chat-form">
+        
+    </div>
+
+    <div class="col-md-8 full-width" id="chat-section">
+        <div class="chat-section full-width">
+            <div id="chat-container" class="chat-messages"></div>
+            <div class="form-container">
+                <form id="chat-form" class="full-width">
                     <input type="hidden" id="sender-id" value="<%= user._id %>" />
-                    <input type="text" name="message" placeholder="Enter Message" id="message" required />
+                    <input class="inpt" type="text" name="message" placeholder="Enter Message" id="message" required />
                     <button type="submit" class="btn btn-primary">Send</button>
                 </form>
             </div>

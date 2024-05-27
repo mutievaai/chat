@@ -1,5 +1,4 @@
 
-  
   .navbar {
     display: flex;
     justify-content: space-between;
@@ -26,6 +25,7 @@
   }
   
   .navbar-nav a {
+    opacity: 100%;
     color: #fff;
     text-decoration: none;
     padding: 0.5rem 1rem;

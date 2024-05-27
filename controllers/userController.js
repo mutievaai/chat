@@ -205,6 +205,18 @@ const loadActivity = async (req, res) => {
     console.log(error.message);
   }
 };
+const openPost = async (req, res) => {
+  try{
+    const postId = req.params.postId
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(400).send("Invalid post ID");
+    }
+    res.render('post', {post:post})
+  }catch(error){
+    console.log(error.message)
+  }
+};
 const createPost = async (req, res) => {
   try {
     const userId = req.session.user._id; // Assuming user ID is stored in session
@@ -552,6 +564,7 @@ module.exports = {
   loadHomepage, // homepage
   loadActivity, // activity
   createPost, // activity
+  openPost,   // activiti-post
   loadAllUsers, // admin
   getUserById, // admin
   updateUser, // admin
