@@ -1,6 +1,7 @@
 body {
   margin: 0;
   font-family: Arial, sans-serif;
+  margin-top: 3.7rem;
 }
 
 .section1 {
@@ -92,18 +93,18 @@ body {
 
 
 .section3 .right h4, .section3 .right p, .section3 .left h4, .section3 .left p {
-  margin: 5px 0; /* Уменьшаем отступы между текстовыми элементами */
+  margin: 5px 0; 
 }
 
 .section4 {
-  background-color: #000; /* Черный фон */
+  background-color: #000; 
   color: #fff; /* Белый цвет текста */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 40px 20px;
-  height: 100vh;
+  height: 40vh;
 }
 
 .contact4 {
@@ -125,12 +126,20 @@ body {
   text-align: center;
   border-radius: 10px;
   padding: 10px;
+  position: relative;
 }
+
+.info4 .icon {
+  width: 40px; /* Размер иконки */
+  height: 40px; /* Размер иконки */
+  margin-bottom: 10px; 
+}
+
 
 .social4 {
   display: flex;
   justify-content: center;
-  gap: 20px; /* Горизонтальное расстояние между иконками */
+  gap: 20px; 
 }
 
 .social4 a {
@@ -141,7 +150,7 @@ body {
   height: 50px;
   border-radius: 50%;
   background-color: #fff;
-  padding: 10px;
+  padding: 1px;
 }
 
 .social4 img {
@@ -149,21 +158,21 @@ body {
   border-radius: 50%;
 }
 .footer {
-  background-color: #000; /* Черный фон */
+  background-color: #000; 
   color: rgba(255, 255, 255, 0.5); /* Белый цвет с 50% прозрачностью */
-  text-align: center; /* Центрируем текст */
-  padding: 10px 0; /* Добавляем отступы сверху и снизу */
-  font-size: 0.875rem; /* Небольшой размер шрифта */
+  text-align: center; 
+  padding: 10px 0; 
+  font-size: 0.875rem; 
 }
 
 .footer .container {
-  padding-left: 1rem; /* Отступы слева */
-  padding-right: 1rem; /* Отступы справа */
+  padding-left: 1rem; 
+  padding-right: 1rem; 
 }
 
 @media (min-width: 992px) {
   .footer .container {
-      padding-left: 3rem; /* Увеличенные отступы слева на больших экранах */
+      padding-left: 3rem; 
       padding-right: 3rem; /* Увеличенные отступы справа на больших экранах */
   }
 }

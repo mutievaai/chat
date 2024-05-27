@@ -172,8 +172,22 @@ const loadHomepage = async (req, res) => {
 // users
 const loadUsers = async (req, res) => {
   try {
-    var users = await User.find({ _id: { $nin: [req.session.user._id] } });
-    res.render("users", { user: req.session.user, users: users });
+    const { name, city, instruments, positions, genres, languages } = req.query;
+    const query = {};
+    if (name) query.name = new RegExp(name, 'i');
+    if (city) query.city = new RegExp(city, 'i');
+    if (instruments) query.instruments = { $in: instruments };
+    if (positions) query.positions = { $in: positions };
+    if (genres) query.genres = { $in: genres };
+    if (languages) query.languages = { $in: languages };
+
+    var users = await User.find(query);
+    const allInstruments = await Instruments.find({});
+    const allPositions = await Positions.find({});
+    const allGenres = await Genres.find({});
+    const allLanguages = await Languages.find({});
+    
+    res.render("users", { user: req.session.user, users, allInstruments, allPositions, allGenres, allLanguages});
   } catch (error) {
     console.log(error.message);
   }

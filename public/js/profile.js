@@ -7,7 +7,8 @@ $(document).ready(() => {
   });
 
   $selectClass.select2({
-    placeholder: "Choose the instrument",
+    placeholder: "<- Choose ->",
     tags: true, // Allow custom tags
+    allowClear: true
   });
 });

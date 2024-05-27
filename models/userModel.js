@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    city: {
+      type: String,
+      ref: "City",
+    },
     image: {
       type: String,
       default: imageBase64,
@@ -34,13 +38,13 @@ const userSchema = new mongoose.Schema(
     ],
     languages: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Languages",
       },
     ],
     genres: [
       {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Genres",
       },
     ],

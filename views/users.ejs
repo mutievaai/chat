@@ -1,8 +1,83 @@
 <%- include('layouts/header.ejs') %>
 <head> 
   <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/users.css">
+  <link rel="stylesheet" href="/css/modal.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+
 </head> 
-<h2 class="mb-4">Hii, <%= user.name %></h2>
+  
+<!-- <h2 class="mb-4">Hii, <%= user.name %></h2> -->
+<div class="searchcontainer col-md-6">
+  <!-- Search / name-city -->
+  <div class="top-search-bar"> 
+    <form action="/users" method="get" id="searchForm">  
+      <div class="inlinecontainer">
+        <image src="../images/Lupa.png" style="width: 23px; height: 23px;">
+        <!-- <label for="name">Name:</label> -->
+        <input class="inpt" type="text" id="name" name="name" placeholder="Find by Username">
+        <!-- <label for="city">City:</label> -->
+        <input class="inpt" type="text"  id="city" name="city" placeholder="Find by City">
+        <button type="submit" class="btn">Search</button>
+        <button type="button" class="btn" id="openModalBtn">Detailed Search</button>
+      </div>
+    </form>
+  </div>
+</div> 
+  <!-- MODAL FOR DETAILED SEARCH -->
+  <!-- The Modal --> 
+<div id="myModal" class="modal"> 
+  <div class="modal-content"> 
+    <span class="close">&times;</span> 
+    <h2>Detailed Search</h2> 
+    <form id="detailedSearch" action="/users" method="get"> 
+      <label for="Name">Name:</label> 
+      <input class= "" type="text" id="name" name="name"> <br>
+      <label for="city">City:</label>
+      <input class="" type="text"  id="city" name="city"> <br>
+      <label for="positions">Positions:</label>
+      <select class="select-class" style="width: 175px" name="positions" multiple="multiple">
+        <% allPositions.forEach(position => { %>
+          <option value="<%= position._id %>"> 
+            <%= position.name %>
+          </option>
+        <% }) %>
+      </select> <br>
+      <label for="instruments">Instruments:</label>
+      <select class="select-class" style="width: 175px" name="instruments" multiple="multiple">
+        <% allInstruments.forEach(instrument => { %>
+          <option value="<%= instrument._id %>">
+            <%= instrument.name %>
+          </option>
+        <% }) %>
+      </select> <br>
+      <label for="genres">Genres:</label>
+      <select class="select-class" style="width: 175px" name="genres" multiple="multiple">
+        <% allGenres.forEach(genre => { %>
+          <option value="<%= genre._id %>">
+            <%= genre.name %>
+          </option>
+        <% }) %>
+      </select> <br>
+      <label for="languages">Languages:</label>
+      <select class="select-class" style="width: 175px" name="languages" multiple="multiple">
+        <% allLanguages.forEach(language => { %>
+          <option value="<%= language._id %>"> 
+            <%= language.name %>
+          </option>
+        <% }) %>
+      </select>
+      <button type="submit">Find</button> 
+    </form> 
+  </div> 
+
+    <!-- <div class="bot-search-bar">
+      <div class="inlinecontainer">
+        
+          <button type="reset">Clear Filters</button>
+      </div>
+    </div> -->
+</div>
 
 <div class="col-md-4">
   <ul class="list-group">
@@ -34,5 +109,8 @@
   </ul>
 </div>
   
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+<script src="/js/users.js"></script>
 
 <%- include('layouts/footer.ejs') %>
