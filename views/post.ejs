@@ -4,7 +4,6 @@
   <link rel="stylesheet" href="/css/post.css">
 </head>
 
-<h3 class="mb-4">Post</h3>
 <body>
   <div class="post-container">
     <div class="post">
@@ -19,7 +18,6 @@
       </div>
     </div>
     <div class="comments">
-      <h3>Comments (<%= comments.length %>)</h3>
       <% comments.forEach(comment => { %>
         <% if (comment.user_id) { %>
           <div class="comment">
@@ -31,10 +29,18 @@
             </div>
             <div class="comment-right">
               <p><%= comment.content %></p>
+              <% if (user && user._id.toString() === comment.user_id._id.toString()) { %>
+                <form action="/comments/<%= comment._id %>" method="POST">
+                  <input type="hidden" name="_method" value="DELETE">
+                  <button class="delete-button" type="submit">Delete</button>
+                </form>
+              <% } %>
             </div>
           </div>
         <% } %>
       <% }) %>
+      
+
     </div>
     
     <div class="comment-form">

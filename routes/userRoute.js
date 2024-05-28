@@ -66,8 +66,12 @@ user_route.post("/activity", upload.single("image"), userController.createPost);
 user_route.post('/comments', auth.isLogin, userController.addComment);
 user_route.get('/posts/:postId/comments', auth.isLogin, userController.getComments);
 user_route.post('/post/:postId/comments', userController.addComment);
-user_route.delete('/comments/:commentId', auth.isLogin, userController.deleteComment);
+user_route.delete('/comments/:commentId', auth.isLogin, userController.deleteComment);  
+user_route.post('/comments/:commentId', auth.isLogin, userController.deleteComment);
+user_route.get('/activity', auth.isLogin, userController.getPosts);
 
+
+  
 
 
 

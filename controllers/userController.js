@@ -7,7 +7,6 @@ const Positions = require("../models/positionsModel");
 const Genres = require("../models/genresModel");
 const Languages = require("../models/languagesModel");
 const Cities = require("../models/citiesModel");
-const Comment = require('../models/commentModel');
 const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const fs = require("fs");
@@ -18,18 +17,11 @@ const { title } = require("process");
 
 const register = async (req, res) => {
   try {
-    // console.log('Request body:', req.body); // Debugging line to check request body
-
     const passwordHash = await bcrypt.hash(req.body.password, 10);
-
-    // const imagePath = "";
-    // const imageBuffer = fs.readFileSync(imagePath);
-    // const imageBase64 = imageBuffer.toString('base64');
 
     const user = new User({
       name: req.body.name,
       email: req.body.email,
-      // image: imageBase64,
       password: passwordHash,
     });
 
@@ -281,13 +273,33 @@ const getComments = async (req, res) => {
 };
 const deleteComment = async (req, res) => {
   try {
-      const { commentId } = req.params;
-      await Comment.findByIdAndDelete(commentId);
-      res.status(200).json({ message: 'Comment deleted successfully' });
+    const { commentId } = req.params;
+    const comment = await Comment.findById(commentId);
+    if (!comment) {
+      return res.status(404).send("Comment not found");
+    }
+    if (req.session.user._id.toString() !== comment.user_id.toString()) {
+      return res.status(403).send("You do not have permission to delete this comment");
+    }
+    const postId = comment.post_id.toString(); // Save the post ID before deleting the comment
+    await Comment.findByIdAndDelete(commentId);
+    res.redirect(`/post/${postId}`); // Redirect to the post page
   } catch (error) {
-      res.status(400).json({ error: error.message });
+    res.status(400).json({ error: error.message });
   }
 };
+
+
+const getPosts = async (req, res) => {
+  try {
+    const posts = await Post.find({});
+    res.render('activity', { posts });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
 // admin-panel
 const loadAllUsers = async (req, res) => {
   try {
@@ -648,5 +660,6 @@ module.exports = {
   resetPasswordPage,
   addComment,
   getComments,
-  deleteComment
+  deleteComment,
+  getPosts
 };
