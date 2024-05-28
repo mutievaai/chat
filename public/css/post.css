@@ -120,3 +120,6 @@ img.post-avatar{
 .comment-form button:hover {
   background-color: #0056b3;
 }
+button.delete-button {
+    margin-left: 10px;
+}
