@@ -16,9 +16,11 @@
         <h2>collaboration</h2>
         <h2>platform</h2>
         <p>Create Music together  wherever you are</p>
+        <%if(!isAuthenticated){%>
         <a href="/login">
             <button class="button">  Sign IN/UP </button>
         </a>
+        <%}%>
     </div>
 </section>
 
@@ -59,30 +61,30 @@
 <section class="section4">
     <div class="contact4">
         <div class="info4">
-            <img src="../images/adress.png" alt="Address Icon" class="icon">
+            <img src="../images/adress.jpg" alt="Address Icon" class="icon">
             <h4>Address</h4>
             <p>Mangilik el 35</p>
         </div>
         <div class="info4">
-            <img src="../images/email.jpeg" alt="Email Icon" class="icon">
+            <img src="../images/email.jpg" alt="Email Icon" class="icon">
             <h4>Email</h4>
             <p><a href="mailto:info@musiciansAITU.com">info@musiciansAITU.com</a></p>
         </div>
         <div class="info4">
-            <img src="../images/phone.jpeg" alt="Phone Icon" class="icon">
+            <img src="../images/phone.jpg" alt="Phone Icon" class="icon">
             <h4>Phone</h4>
             <p>+7 747 627 03 47</p>
         </div>
     </div>
     <div class="social4">
         <a href="https://www.instagram.com" target="_blank">
-            <img src="../images/instagram.png" alt="Instagram">
+            <img src="../images/instagram.jpg" alt="Instagram">
         </a>
         <a href="https://www.facebook.com" target="_blank">
-            <img src="../images/facebook.png" alt="Facebook">
+            <img src="../images/facebook.jpg" alt="Facebook">
         </a>
         <a href="https://www.youtube.com" target="_blank">
-            <img src="../images/youtube.png" alt="YouTube">
+            <img src="../images/youtube.jpg" alt="YouTube">
         </a>
     </div>
 </section>

@@ -6,11 +6,13 @@ const Instruments = require("../models/instrumentsModel");
 const Positions = require("../models/positionsModel");
 const Genres = require("../models/genresModel");
 const Languages = require("../models/languagesModel");
+const Cities = require("../models/citiesModel");
 const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const fs = require("fs");
 const path = require("path");
 const nodemailer = require('nodemailer');
+const { title } = require("process");
 
 
 const register = async (req, res) => {
@@ -172,8 +174,22 @@ const loadHomepage = async (req, res) => {
 // users
 const loadUsers = async (req, res) => {
   try {
-    var users = await User.find({ _id: { $nin: [req.session.user._id] } });
-    res.render("users", { user: req.session.user, users: users });
+    const { name, city, instruments, positions, genres, languages } = req.query;
+    const query = {};
+    if (name) query.name = new RegExp(name, 'i');
+    if (city) query.city = new RegExp(city, 'i');
+    if (instruments) query.instruments = { $in: instruments };
+    if (positions) query.positions = { $in: positions };
+    if (genres) query.genres = { $in: genres };
+    if (languages) query.languages = { $in: languages };
+
+    var users = await User.find(query);
+    const allInstruments = await Instruments.find({});
+    const allPositions = await Positions.find({});
+    const allGenres = await Genres.find({});
+    const allLanguages = await Languages.find({});
+    
+    res.render("users", { user: req.session.user, users, allInstruments, allPositions, allGenres, allLanguages});
   } catch (error) {
     console.log(error.message);
   }
@@ -294,7 +310,8 @@ const openProfile = async (req, res) => {
       .populate("instruments")
       .populate("positions")
       .populate("genres")
-      .populate("languages");
+      .populate("languages")
+      .populate("city");
     if (!profUser) {
       return res.status(400).send("Invalid user ID");
     }
@@ -310,6 +327,7 @@ const openProfile = async (req, res) => {
     const allPositions = await Positions.find({});
     const allGenres = await Genres.find({});
     const allLanguages = await Languages.find({});
+    const allCities = await Cities.find({});
     res.render("profile", {
       user: req.session.user,
       profUser: profUser,
@@ -317,7 +335,8 @@ const openProfile = async (req, res) => {
       allInstruments: allInstruments,
       allPositions: allPositions,
       allGenres: allGenres,
-      allLanguages: allLanguages
+      allLanguages: allLanguages,
+      allCities: allCities
     });
   } catch (error) {
     console.error(error.message);
@@ -373,12 +392,17 @@ const uploadMusic = async (req, res) => {
     }
 
     const musicPath = req.file.path;
+    const fileName = path.basename(req.file.originalname);
     const musicBuffer = fs.readFileSync(musicPath);
     const musicBase64 = musicBuffer.toString("base64");
     const userId = req.session.user._id;
     const user = await User.findById(userId);
-
-    user.music.push(musicBase64);
+    const mus = {
+      title:fileName,
+      data: musicBase64
+    }
+    console.log(fileName)
+    user.music.push(mus);
     await user.save();
 
     res.redirect(`/profile/${userId}`);
@@ -419,6 +443,7 @@ const updateUserProfile = async (req, res) => {
     let selectedPositions = req.body.positions; // This will be an array of selected positions IDs or names
     let selectedGenres = req.body.genres; // This will be an array of selected genres IDs or names
     let selectedLanguages = req.body.languages; // This will be an array of selected languages IDs or names
+    let selectedCity = req.body.city; // This will be an array of selected cities IDs or names
     // Ensure selectedInstruments is an array
     selectedInstruments = Array.isArray(selectedInstruments) ? selectedInstruments : [selectedInstruments];
     selectedPositions = Array.isArray(selectedPositions) ? selectedPositions : [selectedPositions];
@@ -448,6 +473,10 @@ const updateUserProfile = async (req, res) => {
         const language = await Languages.findOne({ name: languageName });
         return language ? language._id : null;
     }));
+      // Convert cities name to ObjectId
+      const city = await Cities.findOne({ name: selectedCity });
+      const cityId = city ? city._id : null;
+    
 
     // Filter out null values
     const validInstrumentIds = instrumentIds.filter(id => id !== null);
@@ -455,9 +484,10 @@ const updateUserProfile = async (req, res) => {
     const validGenreIds = genreIds.filter(id => id !== null);
     const validLanguageIds = languageIds.filter(id => id !== null);
 
+    console.log('Valid City IDs:', cityId);
 
     // Update the user's tags
-    await User.findByIdAndUpdate(userId, { instruments: validInstrumentIds, positions: validPositionIds, genres: validGenreIds, languages: validLanguageIds });
+    await User.findByIdAndUpdate(userId, { instruments: validInstrumentIds, positions: validPositionIds, genres: validGenreIds, languages: validLanguageIds, city: cityId });
     
     res.redirect(`/profile/${userId}`);
   } catch (error) {
@@ -547,7 +577,6 @@ const declineRequest = async (req, res) => {
 
     // Save changes to the current user
     await currentUser.save();
-
     // Redirect to friends page after successfully declining the friend request
     res.redirect("/friends");
   } catch (error) {

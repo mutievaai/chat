@@ -67,16 +67,8 @@ user_route.post("/activity", upload.single("image"), userController.createPost);
 
 user_route.get("/admin", auth.isLogin, userController.loadAllUsers);
 user_route.get("/admin/:userId", auth.isLogin, userController.getUserById);
-user_route.post(
-  "/admin/update/:userId",
-  auth.isLogin,
-  userController.updateUser
-);
-user_route.delete(
-  "/admin/delete/:userId",
-  auth.isLogin,
-  userController.deleteUser
-);
+user_route.post("/admin/update/:userId", auth.isLogin, userController.updateUser);
+user_route.delete("/admin/delete/:userId", auth.isLogin, userController.deleteUser);
 
 user_route.get("/users", auth.isLogin, userController.loadUsers);
 

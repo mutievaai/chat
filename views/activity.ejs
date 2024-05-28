@@ -5,26 +5,7 @@
 </head> 
  
 <h3 class="mb-4">Music Posts </h3> 
- 
-<% if (user.role == "admin") {%> 
-    <button id="openModalBtn">Create Post</button> 
-    <!-- The Modal --> 
-    <div id="myModal" class="modal"> 
-        <div class="modal-content"> 
-            <span class="close">&times;</span> 
-            <h2>Create Post</h2> 
-            <form id="createPostForm" action="" method="POST" enctype="multipart/form-data"> 
-                <label for="postTitle">Title:</label> 
-                <input type="text" id="postTitle" name="title" required><br><br> 
-                <label for="postImage">Image:</label> 
-                <input type="file" name="image" required /><br><br> 
-                <label for="postContent">Content:</label> 
-                <textarea id="postContent" name="content" required></textarea><br><br> 
-                <button type="submit">Create</button> 
-            </form> 
-        </div> 
-    </div> 
-<% } %> 
+
 
 <div class="container">
     <div class="row">
@@ -46,4 +27,24 @@
             </div>
     </div>
 </div>
+ 
+<% if (user.role == "admin") {%> 
+    <button id="openModalBtn">Create Post</button> 
+    <!-- The Modal --> 
+    <div id="myModal" class="modal"> 
+        <div class="modal-content"> 
+            <span class="close">&times;</span> 
+            <h2>Create Post</h2> 
+            <form id="createPostForm" action="" method="POST" enctype="multipart/form-data"> 
+                <label for="postTitle">Title:</label> 
+                <input type="text" id="postTitle" name="title" required><br><br> 
+                <label for="postImage">Image:</label> 
+                <input type="file" name="image" required /><br><br> 
+                <label for="postContent">Content:</label> 
+                <textarea id="postContent" name="content" required></textarea><br><br> 
+                <button type="submit">Create</button> 
+            </form> 
+        </div> 
+    </div> 
+<% } %> 
 <script src="js/create-post.js"></script> 

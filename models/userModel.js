@@ -17,13 +17,26 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    city: {
+      type: String,
+      ref: "City",
+    },
     image: {
       type: String,
       default: imageBase64,
     },
+    city: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Cities",
+    },
     music: [
       {
-        type: String,
+        title:{
+          type:String
+        },
+        data:{
+          type:String
+        }
       },
     ],
     positions: [
