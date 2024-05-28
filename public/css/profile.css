@@ -20,7 +20,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f0f0f0;
-  margin-top: 3.7rem;
+  margin-top: 4rem;
 }
 
 .profile-container {
@@ -103,6 +103,7 @@ body {
 
 .social-list li {
     margin-bottom: 10px;
+    list-style-type: none;
 }
 
 

@@ -116,15 +116,7 @@ body {
     background: #555; /* Scrollbar color on hover */
 }
 
-.form-container {
-    background: #fff;
-    padding: 1rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 990px;
-    margin:0cm
-}
+
 
 .full-width {
     width: 100%;

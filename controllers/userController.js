@@ -7,6 +7,7 @@ const Positions = require("../models/positionsModel");
 const Genres = require("../models/genresModel");
 const Languages = require("../models/languagesModel");
 const Cities = require("../models/citiesModel");
+const Comment = require('../models/commentModel');
 const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const fs = require("fs");
@@ -40,7 +41,6 @@ const register = async (req, res) => {
     console.log(error.message);
   }
 };
-
 const loadLogin = async (req, res) => {
   try {
     res.render("login");
@@ -48,7 +48,6 @@ const loadLogin = async (req, res) => {
     console.log(error.message);
   }
 };
-
 const login = async (req, res) => {
   try {
     // console.log('Request body:', req.body); // Debugging line to check request body
@@ -72,7 +71,6 @@ const login = async (req, res) => {
     console.log(error.message);
   }
 };
-
 const forgotPassword = async (req, res) => { //1
   try{
     res.render("forgotPassword", {message:""});
@@ -80,7 +78,6 @@ const forgotPassword = async (req, res) => { //1
     console.log(error.message)
   }
 }
-
 const requestPasswordReset = async (req, res) => {  //2
   const userEmail = req.body.email;
   console.log("request Password email " + userEmail)
@@ -151,8 +148,6 @@ const resetPassword = async (req, res) => { //4
 
   res.status(200).send({message:'Password has been reset.'});
 };
-
-
 const logout = async (req, res) => {
   try {
     req.session.destroy();
@@ -161,7 +156,6 @@ const logout = async (req, res) => {
     console.log(error.message);
   }
 };
-
 const loadHomepage = async (req, res) => {
   try {
     res.render("homepage", { user: req.session.user });
@@ -193,7 +187,6 @@ const loadUsers = async (req, res) => {
     console.log(error.message);
   }
 };
-
 const saveChat = async (req, res) => {
   try {
     var chat = new Chat({
@@ -210,6 +203,7 @@ const saveChat = async (req, res) => {
     res.status(400).send({ success: false, msg: error.message });
   }
 };
+
 // activity
 const loadActivity = async (req, res) => {
   try {
@@ -227,7 +221,8 @@ const openPost = async (req, res) => {
     if (!post) {
       return res.status(400).send("Invalid post ID");
     }
-    res.render('post', {post:post})
+    const comments = await Comment.find({ post_id: postId }).populate('user_id', 'name');
+    res.render('post', { post, comments, user: req.session.user });
   }catch(error){
     console.log(error.message)
   }
@@ -252,6 +247,44 @@ const createPost = async (req, res) => {
     res.redirect("activity");
   } catch (error) {
     console.log(error.message);
+  }
+};
+const addComment = async (req, res) => {
+  try {
+    const post_id  = req.params.postId;
+    const user_id  = req.session.user._id;
+    const { text: content  } = req.body;
+
+    const comment = new Comment({
+      post_id,
+      user_id,
+      content
+    });
+
+    await comment.save();
+
+    res.redirect(`/post/${post_id}`);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Internal Server Error");
+  }
+};
+const getComments = async (req, res) => {
+  try {
+      const { postId } = req.params;
+      const comments = await Comment.find({ post_id: postId }).populate('user_id', 'name');
+      res.status(200).json(comments);
+  } catch (error) {
+      res.status(400).json({ error: error.message });
+  }
+};
+const deleteComment = async (req, res) => {
+  try {
+      const { commentId } = req.params;
+      await Comment.findByIdAndDelete(commentId);
+      res.status(200).json({ message: 'Comment deleted successfully' });
+  } catch (error) {
+      res.status(400).json({ error: error.message });
   }
 };
 // admin-panel
@@ -606,5 +639,8 @@ module.exports = {
   forgotPassword,
   resetPassword,
   requestPasswordReset,
-  resetPasswordPage
+  resetPasswordPage,
+  addComment,
+  getComments,
+  deleteComment
 };
