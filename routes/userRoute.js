@@ -63,13 +63,10 @@ user_route.get('/resetPassword/:token', auth.isLogout, userController.resetPassw
 user_route.get("/activity", auth.isLogin, userController.loadActivity);         //open all posts
 user_route.get("/post/:postId", auth.isLogin, userController.openPost);           //open post id
 user_route.post("/activity", upload.single("image"), userController.createPost);// create post
-user_route.post('/comments', auth.isLogin, userController.addComment);
-user_route.get('/posts/:postId/comments', auth.isLogin, userController.getComments);
-user_route.post('/post/:postId/comments', userController.addComment);
-user_route.delete('/comments/:commentId', auth.isLogin, userController.deleteComment);  
-user_route.post('/comments/:commentId', auth.isLogin, userController.deleteComment);
+user_route.post('/post/:postId/add-comment', auth.isLogin, userController.addComment); // add comment
+user_route.post('/post/:postId/delete-comment/:commentId', auth.isLogin, userController.deleteComment); // delete comment
 user_route.get('/activity', auth.isLogin, userController.getPosts);
-
+user_route.post('/delete-post/:postId', auth.isLogin, userController.deletePost);
 
   
 
