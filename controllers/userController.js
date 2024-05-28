@@ -7,6 +7,7 @@ const Positions = require("../models/positionsModel");
 const Genres = require("../models/genresModel");
 const Languages = require("../models/languagesModel");
 const Cities = require("../models/citiesModel");
+const Comment = require('../models/commentModel');
 const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const fs = require("fs");
@@ -34,6 +35,7 @@ const register = async (req, res) => {
     console.log(error.message);
   }
 };
+
 const loadLogin = async (req, res) => {
   try {
     res.render("login");
@@ -41,6 +43,7 @@ const loadLogin = async (req, res) => {
     console.log(error.message);
   }
 };
+
 const login = async (req, res) => {
   try {
     // console.log('Request body:', req.body); // Debugging line to check request body
@@ -64,6 +67,7 @@ const login = async (req, res) => {
     console.log(error.message);
   }
 };
+
 const forgotPassword = async (req, res) => { //1
   try{
     res.render("forgotPassword", {message:""});
@@ -71,6 +75,7 @@ const forgotPassword = async (req, res) => { //1
     console.log(error.message)
   }
 }
+
 const requestPasswordReset = async (req, res) => {  //2
   const userEmail = req.body.email;
   console.log("request Password email " + userEmail)
@@ -141,6 +146,8 @@ const resetPassword = async (req, res) => { //4
 
   res.status(200).send({message:'Password has been reset.'});
 };
+
+
 const logout = async (req, res) => {
   try {
     req.session.destroy();
@@ -149,6 +156,7 @@ const logout = async (req, res) => {
     console.log(error.message);
   }
 };
+
 const loadHomepage = async (req, res) => {
   try {
     res.render("homepage", { user: req.session.user });
@@ -180,6 +188,7 @@ const loadUsers = async (req, res) => {
     console.log(error.message);
   }
 };
+
 const saveChat = async (req, res) => {
   try {
     var chat = new Chat({
