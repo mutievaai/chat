@@ -63,6 +63,12 @@ user_route.get('/resetPassword/:token', auth.isLogout, userController.resetPassw
 user_route.get("/activity", auth.isLogin, userController.loadActivity);         //open all posts
 user_route.get("/post/:postId", auth.isLogin, userController.openPost);           //open post id
 user_route.post("/activity", upload.single("image"), userController.createPost);// create post
+user_route.post('/comments', auth.isLogin, userController.addComment);
+user_route.get('/posts/:postId/comments', auth.isLogin, userController.getComments);
+user_route.post('/post/:postId/comments', userController.addComment);
+user_route.delete('/comments/:commentId', auth.isLogin, userController.deleteComment);
+
+
 
 
 user_route.get("/admin", auth.isLogin, userController.loadAllUsers);
@@ -73,48 +79,19 @@ user_route.delete("/admin/delete/:userId", auth.isLogin, userController.deleteUs
 user_route.get("/users", auth.isLogin, userController.loadUsers);
 
 user_route.get("/profile/:userId", auth.isLogin, userController.openProfile);
-user_route.post(
-  "/profile",
-  auth.isLogin,
-  upload.single("image"),
-  userController.uploadProfileImage
-);
-user_route.post(
-  "/upload-music",
-  auth.isLogin,
-  upload.single("music"),
-  userController.uploadMusic
-);
-user_route.post(
-  "/delete-music/:userId/:musicIndex",
-  userController.deleteMusic
-);
-user_route.post(
-  "/updateUserProfile",
-  auth.isLogin,
-  userController.updateUserProfile
-);
+user_route.post("/profile", auth.isLogin, upload.single("image"), userController.uploadProfileImage);
+user_route.post("/upload-music", auth.isLogin, upload.single("music"), userController.uploadMusic);
+user_route.post("/delete-music/:userId/:musicIndex", userController.deleteMusic);
+user_route.post("/updateUserProfile", auth.isLogin, userController.updateUserProfile);
 
-user_route.post(
-  "/friend-request/:profId",
-  auth.isLogin,
-  userController.sendFriendRequest
-);
+user_route.post("/friend-request/:profId", auth.isLogin,userController.sendFriendRequest);
 
 user_route.get("/friends", auth.isLogin, userController.loadFriends);
 user_route.post("/save-chat", userController.saveChat);
-user_route.post(
-  "/accept-request/:friendRequestId",
-  auth.isLogin,
-  userController.acceptRequest
-);
-user_route.post(
-  "/decline-request/:friendRequestId",
-  auth.isLogin,
-  userController.declineRequest
-);
+user_route.post("/accept-request/:friendRequestId", auth.isLogin, userController.acceptRequest);
+user_route.post("/decline-request/:friendRequestId", auth.isLogin, userController.declineRequest);
 
-user_route.get("*", function (req, res) {
+user_route.get("*", function (req, res) { 
   res.redirect("/");
 });
 
