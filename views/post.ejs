@@ -19,18 +19,28 @@
       </div>
     </div>
     <div class="comments">
-      <h3>Comments</h3>
+      <h3>Comments (<%= comments.length %>)</h3>
       <% comments.forEach(comment => { %>
-        <div class="comment">
-          <h4><%= comment.user_id.name %></h4>
-          <p><%= comment.content %></p>
-        </div>
+        <% if (comment.user_id) { %>
+          <div class="comment">
+            <div class="comment-left">
+              <a href="/profile/<%= comment.user_id._id %>">
+                <img class="post-avatar" src="data:image/jpeg;base64, <%= comment.user_id.image %>" alt="<%= comment.user_id.name %>'s profile image">
+                <p class="user-profile-comment"><%= comment.user_id.name %></p>
+              </a>
+            </div>
+            <div class="comment-right">
+              <p><%= comment.content %></p>
+            </div>
+          </div>
+        <% } %>
       <% }) %>
     </div>
+    
     <div class="comment-form">
-      <h3>Write a comment</h3>
+      <h2>Write a comment</h2>
       <form action="/post/<%= post._id %>/comments" method="POST">
-        <textarea name="text" placeholder="Write your comment here..." required></textarea>
+        <textarea name="text" placeholder="Write your comment here" required></textarea>
         <button type="submit">Submit</button>
       </form>
     </div>

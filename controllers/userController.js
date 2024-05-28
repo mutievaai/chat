@@ -221,7 +221,7 @@ const openPost = async (req, res) => {
     if (!post) {
       return res.status(400).send("Invalid post ID");
     }
-    const comments = await Comment.find({ post_id: postId }).populate('user_id', 'name');
+    const comments = await Comment.find({ post_id: postId }).populate('user_id', 'name image');
     res.render('post', { post, comments, user: req.session.user });
   }catch(error){
     console.log(error.message)
