@@ -7,12 +7,12 @@ const Positions = require("../models/positionsModel");
 const Genres = require("../models/genresModel");
 const Languages = require("../models/languagesModel");
 const Cities = require("../models/citiesModel");
-const Comment = require('../models/commentModel');
 const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const fs = require("fs");
 const path = require("path");
 const nodemailer = require('nodemailer');
+const { title } = require("process");
 
 
 const register = async (req, res) => {
@@ -447,12 +447,17 @@ const uploadMusic = async (req, res) => {
     }
 
     const musicPath = req.file.path;
+    const fileName = path.basename(req.file.originalname);
     const musicBuffer = fs.readFileSync(musicPath);
     const musicBase64 = musicBuffer.toString("base64");
     const userId = req.session.user._id;
     const user = await User.findById(userId);
-
-    user.music.push(musicBase64);
+    const mus = {
+      title:fileName,
+      data: musicBase64
+    }
+    console.log(fileName)
+    user.music.push(mus);
     await user.save();
 
     res.redirect(`/profile/${userId}`);

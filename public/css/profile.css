@@ -1,3 +1,4 @@
+
 .select-container {
   position: relative;
   display: inline-block; /* Ensures the container takes only as much width as necessary */
@@ -20,7 +21,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f0f0f0;
-  margin-top: 4rem;
+  margin-top: 5%;
 }
 
 .profile-container {
@@ -49,6 +50,7 @@ body {
     border-radius: 50%;
     border: 5px solid #fff;
     object-fit: cover;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 .profile-info {
@@ -57,6 +59,9 @@ body {
 
 .profile-header {
     margin-bottom: 20px;
+    font-size: 40px;
+    font-family: serif;
+    margin-left: 20%;
 }
 
 .profile-header h1 {
@@ -78,6 +83,7 @@ body {
     border-bottom: 2px solid #333;
     padding-bottom: 5px;
     margin-bottom: 15px;
+    color: black;
 }
 
 .profile-main p {
@@ -85,11 +91,44 @@ body {
     margin-bottom: 20px;
 }
 
+.music-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.music-list li {
+  margin-bottom: 20px;
+}
+
+.music-list p {
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.music-list {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #12a6b9, #444ac9);
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.music-list:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
 .music-list audio {
   width: 100%;
+  outline: none;
   border-radius: 5px;
   border: 1px solid #ccc;
-  padding: 10px;
+  /* padding: 10px; */
   box-sizing: border-box;
   background-color: #f9f9f9;
   transition: background-color 0.3s, box-shadow 0.3s;
@@ -103,6 +142,7 @@ body {
 
 .social-list li {
     margin-bottom: 10px;
+    list-style-type: none;
     list-style-type: none;
 }
 

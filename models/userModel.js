@@ -31,7 +31,12 @@ const userSchema = new mongoose.Schema(
     },
     music: [
       {
-        type: String,
+        title:{
+          type:String
+        },
+        data:{
+          type:String
+        }
       },
     ],
     positions: [
