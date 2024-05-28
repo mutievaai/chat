@@ -14,6 +14,7 @@ const fs = require("fs");
 const path = require("path");
 const nodemailer = require('nodemailer');
 const { title } = require("process");
+const {error} = require("console");
 
 
 const register = async (req, res) => {
@@ -399,6 +400,17 @@ const openProfile = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
+const updateAboutMe = async (req, res) => {
+  try{
+    const aboutMe = req.body.aboutMe
+    await User.findByIdAndUpdate(req.session.user._id, {aboutMe : aboutMe})
+    res.redirect(`/profile/${req.session.user._id}`)
+  }
+  catch(eror){
+    console.loge(error.message)
+    res.status(500).send("Cant Update")
+  }
+};
 const sendFriendRequest = async (req, res) => {
   try {
     const userId = req.session.user._id; // The ID of the user sending the request
@@ -670,6 +682,7 @@ module.exports = {
   requestPasswordReset,
   resetPasswordPage,
   addComment,
+  updateAboutMe,
   deleteComment,
   getPosts, 
   deletePost

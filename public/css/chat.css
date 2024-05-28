@@ -1,181 +1,158 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden; /* Prevent body scrolling */
-    margin-top: 3.7rem;
-}
-
-
-.container-fluid {
-    display: flex;
-    height: 100%;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-.full-height {
-    height: 100%;
-}
-
-.full-width {
-    width: 100%;
-}
-
-
-.active-user {
-    background-color: #1E90FF; /* Highlight background color */
-    border-left: 5px;
-    border-radius: 8px;
-}
-
-#contacts-section {
-    background-color: #5caeff; 
-    overflow-y: auto; /* Enable scrolling within the contacts section */
-    padding: 20px;
-}
-/* Custom scrollbar styles */
-#contacts::-webkit-scrollbar {
-    width: 2px; /* Width of the scrollbar */
-}
-
-
-#contacts::-webkit-scrollbar-track {
-    background: #c9c9c9; /* Background of the scrollbar track */
-    border-radius: 10px;
-}
-
-#contacts::-webkit-scrollbar-thumb {
-    background: #888; /* Scrollbar color */
-    border-radius: 10px;
-}
-
-#contacts::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Scrollbar color on hover */
-}
-
-#chat-section {
-    background-color: #F5F5F5; /* Blue for illustration */
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 20px;
-    overflow: hidden; /* Prevent scrolling within the chat section */
-}
-
-.sidebar .list-group-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.sidebar .user-image {
-    border-radius: 50%;
-    margin-right: 10px;
-    width: 50px;
-    height: 50px;
-}
-.sidebar {
-    width: 300px;
-}
-
-.chat-section {
-    display: flex;
-    flex-direction: column;
-    height: 90%;
-}
-
-#chat-container {
-    flex-grow: 1;
-    overflow-y: auto; /* Enable scrolling within the chat messages */
-    margin-bottom: 20px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-/* Custom scrollbar styles */
-#chat-container::-webkit-scrollbar {
-    width: 2px; /* Width of the scrollbar */
-}
-
-#chat-container::-webkit-scrollbar-track {
-    background: #c9c9c9; /* Background of the scrollbar track */
-    border-radius: 10px;
-}
-
-#chat-container::-webkit-scrollbar-thumb {
-    background: #888; /* Scrollbar color */
-    border-radius: 10px;
-}
-
-#chat-container::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Scrollbar color on hover */
-}
-
-
-
-.full-width {
-    width: 100%;
-}
-
-.inpt {
-    width: calc(100% - 90px);
-    padding: 0.75rem;
-    margin-bottom: 1rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    box-sizing: border-box;
-    outline: none;
-}
-
-.btn {
-    padding: 0.75rem 1.5rem;
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    outline: none;
-}
-
-.btn:hover {
-    background-color: #0056b3;
-}
-
-.message {
-    /*display: inline-block; /*Make the width adjust to content */
-    padding: 4px;
-    margin: 4px 0;
-    border-radius: 10px; /* Border radius for rounded corners */
-    background-color: #f1f1f1; /* Background color for messages */
-    /* max-width: 70%; Limit the max width of the messages */
-    word-wrap: break-word; /* Ensure long words break to the next line */
-    max-width: 60%;
-    clear: both;
-}
-
-.current-user-chat {
-    float: right; /* Align to the right */
-    text-align: right;
-    background-color: #90cbff; /* Different background for current user */
-    margin-bottom: 10px;
-}
-
-.distance-user-chat {
-    float: left; /* Align to the left */
-    text-align: left;
-    background-color: #90cbff; /* Different background for other users */
-    margin-bottom: 10px;
-}
-
-.start-head {
-    text-align: center;
-    margin-top: 50px;
-}
+body { 
+    height: 90%; 
+    font-family: Arial, sans-serif; 
+    margin-top: 3.7rem;;  
+    padding: 0; 
+    background-color: #f0f0f0; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    /* height: 100vh; */ 
+} 
+ 
+.chat-container { 
+    display: flex; 
+    width: 80%; 
+    height: 90vh; /* 100% of the viewport height */ 
+    background-color: white; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+    border-radius: 10px; 
+    overflow: hidden; 
+} 
+ 
+.user-list { 
+    width: 25%; 
+    border-right: 1px solid #e0e0e0; 
+    overflow-y: auto; 
+    background-color: #f8f8f8; 
+    padding: 10px; 
+} 
+ 
+.user-item { 
+    display: flex; 
+    align-items: center; 
+    padding: 10px; 
+    cursor: pointer; 
+} 
+ 
+.user-item:hover { 
+    background-color: #e0e0e0; 
+} 
+ 
+.user-icon { 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    margin-right: 10px; 
+} 
+ 
+.user-name { 
+    font-size: 16px; 
+} 
+ 
+.chat-window { 
+    width: 75%; 
+    height: 80%; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+} 
+ 
+.chat-header { 
+    height: 6vh; 
+    display: flex; 
+    align-items: center; 
+    padding: 10px; 
+    border-bottom: 1px solid #e0e0e0; 
+    background-color: #f8f8f8; 
+} 
+ 
+.chat-user-icon { 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50%; 
+    margin-right: 10px; 
+} 
+ 
+.chat-user-name { 
+    font-size: 18px; 
+    font-weight: bold; 
+} 
+ 
+.start-head { 
+    text-align: center; 
+    padding: 20px; 
+} 
+ 
+.chat-messages { 
+    flex-grow: 1; 
+    padding: 10px; 
+    overflow-y: auto; 
+    height: calc(90vh - 20vh); /* Adjust based on the header and input height */ 
+    display: flex; 
+    flex-direction: column; 
+} 
+ 
+.message { 
+    padding: 10px; 
+    border-radius: 10px; 
+    margin-bottom: 10px; 
+    max-width: 60%; 
+    display: inline-block; /* Ensure it only takes up necessary width */ 
+ 
+} 
+ 
+.current-user-chat { 
+    background-color: #04f9c0; 
+    color: white; 
+    align-self: flex-end; 
+    text-align: right; 
+} 
+ 
+.distance-user-chat { 
+    background-color: #00d0ff; 
+    align-self: flex-start; 
+    text-align: left; 
+} 
+ 
+.chat-input { 
+    height: 9vh; 
+    display: inline-block; 
+    border-top: 1px solid #e0e0e0; 
+    padding: 10px; 
+    background-color: #f8f8f8; 
+    width: 100%; 
+} 
+ 
+.chat-input input { 
+    flex-grow: 1; 
+    padding: 10px; 
+    border: none; 
+    border-radius: 5px; 
+    margin-right: 10px; 
+    font-size: 16px; 
+    width: 80%; 
+} 
+ 
+.chat-input button { 
+    padding: 10px 20px; 
+    border: none; 
+    border-radius: 5px; 
+    background-color: #007bff; 
+    color: white; 
+    font-size: 16px; 
+    cursor: pointer; 
+} 
+ 
+.chat-input button:hover { 
+    background-color: #0056b3; 
+} 
+ 
+.active-user { 
+    background-color: #d0d0d0; 
+} 
+ 
+a { 
+    text-decoration: none; 
+    color: inherit; /* This will make the link inherit the color of the surrounding text */ 
+  }

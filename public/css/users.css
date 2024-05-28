@@ -65,3 +65,34 @@ body {
 .btn:hover {
   background-color: #0056b3;
 }
+.user-container { 
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: center; 
+  gap: 20px; 
+} 
+ 
+.user-card { 
+  background-color: white; 
+  border-radius: 10px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  text-align: center; 
+  padding: 20px; 
+  width: 150px; 
+} 
+ 
+.user-image { 
+  width: 100%; 
+  border-radius: 50%; 
+} 
+ 
+.user-name { 
+  margin-top: 10px; 
+  font-size: 16px; 
+  font-weight: bold; 
+} 
+ 
+a { 
+  text-decoration: none; 
+  color: inherit; /* This will make the link inherit the color of the surrounding text */ 
+}

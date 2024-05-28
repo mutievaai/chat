@@ -98,8 +98,15 @@
               </ul>
           </section>
             <section class="about">
-              <h2>About me</h2>
-              <p>Краткая биография артиста, информация о музыкальной карьере, достижения и т.д.</p>
+              <h2>Обо мне</h2> 
+              <% if (status == "you") {%> 
+                <form action="/update-about-me" method="post"> 
+                    <textarea name="aboutMe" rows="4" cols="50"><%= profUser.aboutMe %></textarea> 
+                    <button type="submit">Save</button> 
+                </form> 
+                <% } else { %> 
+                    <p><%= profUser.aboutMe %></p> 
+                <% } %>
             </section>
             <section class="music">
               <h2>Audio:</h2>

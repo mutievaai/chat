@@ -84,6 +84,7 @@ user_route.post("/profile", auth.isLogin, upload.single("image"), userController
 user_route.post("/upload-music", auth.isLogin, upload.single("music"), userController.uploadMusic);
 user_route.post("/delete-music/:userId/:musicIndex", userController.deleteMusic);
 user_route.post("/updateUserProfile", auth.isLogin, userController.updateUserProfile);
+user_route.post("/update-about-me", auth.isLogin, userController.updateAboutMe);
 
 user_route.post("/friend-request/:profId", auth.isLogin,userController.sendFriendRequest);
 

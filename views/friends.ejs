@@ -1,68 +1,72 @@
-<%- include('layouts/header.ejs') %>
-<head> 
-    <link rel="stylesheet" href="/css/navbar.css">
-    <link rel="stylesheet" href="/css/chat.css">
-</head> 
-
-<div class="container-fluid">
-    <div class="row no-gutters">
-        <!-- Left Sidebar -->
-        <div class="col-md-4 sidebar full-height" id="contacts-section">
-            <h2 class="mb-4">Hi, <%= user.name %></h2>
-
-            <% if (friendRequests.length > 0) { %>
-                <h3>Friend Requests</h3>
-                <ul class="list-group mb-4">
-                    <% for(let i = 0; i < friendRequests.length; i++) { %>
-                        <li class="list-group-item user-list" data-id="<%= friendRequests[i]._id %>">
-                            <img src="data:image/jpeg;base64,<%= friendRequests[i].image %>" alt="User image" class="user-image" />
-                            <%= friendRequests[i].name %>
-                            <form action="/accept-request/<%= friendRequests[i]._id %>" method="post" style="display: inline;">
-                                <button type="submit" class="btn btn-success">Accept</button>
-                            </form>
-                            <form action="/decline-request/<%= friendRequests[i]._id %>" method="post" style="display: inline;">
-                                <button type="submit" class="btn btn-danger">Decline</button>
-                            </form>
-                        </li>
-                    <% } %>
-                </ul>
-            <% } %>
-
-            <% if (friends.length > 0) { %>
-                <h3>Friends</h3>
-                <ul class="list-group">
-                    <% for(let i = 0; i < friends.length; i++) { %>
-                        <li class="list-group-item user-list cursor-pointer" data-id="<%= friends[i]._id %>">
-                            <img src="data:image/jpeg;base64,<%= friends[i].image %>" alt="User image" class="user-image" />
-                            <%= friends[i].name %>
-                        </li>
-                    <% } %>
-                </ul>
-            <% } else { %>
-                <h4>You have no friends</h4>
-            <% } %>
-        </div>
-
-        <!-- Chat Window -->
-        
-    </div>
-
-    <div class="col-md-7 full-width" id="chat-section">
-        <div class="chat-section full-width">
-            <div id="chat-container" class="chat-messages"></div>
-            <div class="form-container">
-                <form id="chat-form" class="full-width">
-                    <input type="hidden" id="sender-id" value="<%= user._id %>" />
-                    <input class="inpt" type="text" name="message" placeholder="Enter Message" id="message" required />
-                    <button type="submit" class="btn btn-primary">Send</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script src="/socket.io/socket.io.js"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="/js/chat.js"></script>
-
+<%- include('layouts/header.ejs') %> 
+<head>  
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <link rel="stylesheet" href="/css/navbar.css"> 
+    <link rel="stylesheet" href="/css/chat.css"> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script src="/socket.io/socket.io.js"></script> 
+    <script src="js/chat.js"></script> 
+</head>  
+<body> 
+    <input id="sender-id" value="<%= user._id %>" type="hidden"> 
+    <div class="chat-container"> 
+        <div class="user-list"> 
+        <!-- Left Sidebar --> 
+        <% if (friendRequests.length > 0) { %> 
+            <% for(let i = 0; i < friendRequests.length; i++) { %> 
+                <div class="user-item" data-id="<%= friendRequests[i]._id %>"> 
+                    <img src="data:image/jpeg;base64,<%= friendRequests[i].image %>" alt="User image" class="user-icon" /> 
+                    <p class="user-name"><%= friendRequests[i].name %> </p> 
+                    <form action="/accept-request/<%= friendRequests[i]._id %>" method="post" style="display: inline;"> 
+                        <button type="submit" class="btn btn-success">Accept</button> 
+                    </form> 
+                    <form action="/decline-request/<%= friendRequests[i]._id %>" method="post" style="display: inline;"> 
+                        <button type="submit" class="btn btn-danger">Decline</button> 
+                    </form> 
+                </div> 
+            <% } %> 
+        <% } %>  
+        <% if (friends.length > 0) { %> 
+            <% friends.forEach(friend => { %> 
+                <div class="user-item" data-id="<%= friend._id %>" data-name="<%= friend.name %>" data-icon="data:image/jpeg;base64,<%= friend.image %>"> 
+                    <img src="data:image/jpeg;base64,<%= friend.image %>" alt="User image" class="user-icon" /> 
+                    <p class="user-name" ><%= friend.name %></p> 
+                </div> 
+            <% }); %> 
+        </div> 
+ 
+        <% } else { %> 
+            <h4>You have no friends</h4> 
+        <% } %> 
+ 
+        <!-- Chat Window --> 
+        <div class="chat-window"> 
+            <a class="chat-user-link" href=""> 
+                <div class="chat-header"> 
+                    <img src="" alt="Chat User" class="chat-user-icon"> 
+                    <p class="chat-user-name"></p> 
+                </div> 
+            </a> 
+             
+             
+            <div class="start-head"> 
+                Start a conversation 
+            </div> 
+            <div class="chat-section" style="display: none;"> 
+                <div id="chat-container" class="chat-messages"> 
+                    <!-- Chat messages will go here --> 
+                </div> 
+                <div class="chat-input"> 
+                    <form id="chat-form"> 
+                        <input type="text" id="message"> 
+                        <button type="submit">Send</button> 
+                    </form> 
+                </div> 
+            </div> 
+        </div> 
+    </div> 
+</body> 
+ 
+ 
 <%- include('layouts/footer.ejs') %>
