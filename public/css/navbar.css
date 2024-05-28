@@ -33,7 +33,7 @@
 }
 
 .navbar-nav a:hover {
-  background-color: #575757;
+  background-color: #000000;
 }
 
 .fixed-top {
@@ -42,4 +42,10 @@
   right: 0;
   left: 0;
   z-index: 1030;
+}
+
+img.birbale {
+  width: 500px;
+  height: 300px;
+  margin-bottom: 20px;
 }

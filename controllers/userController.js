@@ -7,13 +7,14 @@ const Positions = require("../models/positionsModel");
 const Genres = require("../models/genresModel");
 const Languages = require("../models/languagesModel");
 const Cities = require("../models/citiesModel");
-const Comment = require('../models/commentModel');
+const Comment = require("../models/CommentModel")
 const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const fs = require("fs");
 const path = require("path");
 const nodemailer = require('nodemailer');
 const { title } = require("process");
+const {error} = require("console");
 
 
 const register = async (req, res) => {
@@ -271,33 +272,43 @@ const addComment = async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-const getComments = async (req, res) => {
-  try {
-      const { postId } = req.params;
-      const comments = await Comment.find({ post_id: postId }).populate('user_id', 'name');
-      res.status(200).json(comments);
-  } catch (error) {
-      res.status(400).json({ error: error.message });
-  }
-};
 const deleteComment = async (req, res) => {
   try {
+    const post_id  = req.params.postId;
     const { commentId } = req.params;
     const comment = await Comment.findById(commentId);
+    const user = await User.findById(req.session.user._id)
     if (!comment) {
       return res.status(404).send("Comment not found");
     }
-    if (req.session.user._id.toString() !== comment.user_id.toString()) {
+    console.log(req.session.user._id.toString()+", "+ comment.user_id.toString())
+    if (user.role == "admin"){
+      pass;
+    }else if (user._id.toString() != comment.user_id.toString()) {
       return res.status(403).send("You do not have permission to delete this comment");
     }
-    const postId = comment.post_id.toString(); // Save the post ID before deleting the comment
     await Comment.findByIdAndDelete(commentId);
-    res.redirect(`/post/${postId}`); // Redirect to the post page
+    res.redirect(`/post/${post_id}`); // Redirect to the post page
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
-
+const deletePost = async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const post = await Post.findById(postId);
+    if (!post) {
+      return res.status(404).send("Post not found");
+    }
+    if (req.session.user.role == "user" ) {
+      return res.status(403).send("You do not have permission to delete this post");
+    }
+    await Post.findByIdAndDelete(postId);
+    res.redirect(`/activity`);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 
 const getPosts = async (req, res) => {
   try {
@@ -395,6 +406,17 @@ const openProfile = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Internal Server Error");
+  }
+};
+const updateAboutMe = async (req, res) => {
+  try{
+    const aboutMe = req.body.aboutMe
+    await User.findByIdAndUpdate(req.session.user._id, {aboutMe : aboutMe})
+    res.redirect(`/profile/${req.session.user._id}`)
+  }
+  catch(eror){
+    console.loge(error.message)
+    res.status(500).send("Cant Update")
   }
 };
 const sendFriendRequest = async (req, res) => {
@@ -668,7 +690,8 @@ module.exports = {
   requestPasswordReset,
   resetPasswordPage,
   addComment,
-  getComments,
+  updateAboutMe,
   deleteComment,
-  getPosts
+  getPosts, 
+  deletePost
 };
