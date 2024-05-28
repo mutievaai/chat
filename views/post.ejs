@@ -18,27 +18,28 @@
         </div>
       </div>
       <div class="comments">
-        <% comments.forEach(comment => { %>
-          <% if (comment.user_id) { %>
-            <div class="comment">
-              <div class="comment-left">
-                <a href="/profile/<%= comment.user_id._id %>">
-                  <img class="post-avatar" src="data:image/jpeg;base64, <%= comment.user_id.image %>" alt="<%= comment.user_id.name %>'s profile image">
-                  <p class="user-profile-comment"><%= comment.user_id.name %></p>
-                </a>
+        <%if (comments) {%>
+          <% comments.forEach(comment => { %>
+            <% if (comment.user_id) { %>
+              <div class="comment">
+                <div class="comment-left">
+                  <a href="/profile/<%= comment.user_id._id %>">
+                    <img class="post-avatar" src="data:image/jpeg;base64, <%= comment.user_id.image %>" alt="<%= comment.user_id.name %>'s profile image">
+                    <p class="user-profile-comment"><%= comment.user_id.name %></p>
+                  </a>
+                </div>
+                <div class="comment-right">
+                  <p><%= comment.content %></p>
+                  <% if (user && (user._id.toString() === comment.user_id._id.toString() || user.role == "admin")) { %>
+                    <form action="/post/<%=post._id%>/delete-comment/<%= comment._id %>" method="POST">
+                      <button class="delete-button" type="submit">Delete</button>
+                    </form>
+                  <% } %>
+                </div>
               </div>
-              <div class="comment-right">
-                <p><%= comment.content %></p>
-                <% if (user && (user._id.toString() === comment.user_id._id.toString() || user.role == "admin")) { %>
-                  <form action="/post/<%=post._id%>/delete-comment/<%= comment._id %>" method="POST">
-                    <button class="delete-button" type="submit">Delete</button>
-                  </form>
-                <% } %>
-              </div>
-            </div>
-          <% } %>
-        <% }) %>
-        
+            <% } %>
+          <% }) %>
+        <% } %>
 
       </div>
       

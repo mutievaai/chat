@@ -7,6 +7,7 @@ const Positions = require("../models/positionsModel");
 const Genres = require("../models/genresModel");
 const Languages = require("../models/languagesModel");
 const Cities = require("../models/citiesModel");
+const Comment = require("../models/CommentModel")
 const bcrypt = require("bcrypt");
 const crypto = require('crypto');
 const fs = require("fs");

@@ -3,7 +3,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #000124a4;
+  background-color: #000000;
   padding: 1rem;
 }
 
@@ -33,7 +33,7 @@
 }
 
 .navbar-nav a:hover {
-  background-color: #575757;
+  background-color: #000000;
 }
 
 .fixed-top {
