@@ -16,8 +16,6 @@
         <image src="../images/Lupa.png" style="width: 23px; height: 23px;">
         <!-- <label for="name">Name:</label> -->
         <input class="inpt" type="text" id="name" name="name" placeholder="Find by Username">
-        <!-- <label for="city">City:</label> -->
-        <input class="inpt" type="text"  id="city" name="city" placeholder="Find by City">
         <button type="submit" class="btn">Search</button>
         <button type="button" class="btn" id="openModalBtn">Detailed Search</button>
       </div>
@@ -34,8 +32,14 @@
       <label for="Name">Name:</label> 
       <input class= "" type="text" id="name" name="name"> <br>
       <label for="city">City:</label>
-      <input class="" type="text"  id="city" name="city"> <br>
-      <label for="positions">Positions:</label>
+      <select class="select-class" style="width: 175px" name="city">
+        <% allCities.forEach(city => { %>
+          <option value="<%= city._id %>" > 
+            <%= city.name %>
+          </option>
+        <% }) %>
+      </select>
+      <label for="positions">Roles:</label>
       <select class="select-class" style="width: 175px" name="positions" multiple="multiple">
         <% allPositions.forEach(position => { %>
           <option value="<%= position._id %>"> 

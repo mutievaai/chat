@@ -21,10 +21,6 @@ const userSchema = new mongoose.Schema(
       type:String,
       default:"---"
     },
-    city: {
-      type: String,
-      ref: "City",
-    },
     image: {
       type: String,
       default: imageBase64,

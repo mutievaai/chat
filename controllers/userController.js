@@ -165,7 +165,7 @@ const loadUsers = async (req, res) => {
     const { name, city, instruments, positions, genres, languages } = req.query;
     const query = {};
     if (name) query.name = new RegExp(name, 'i');
-    if (city) query.city = new RegExp(city, 'i');
+    if (city) query.city = { $in: city };
     if (instruments) query.instruments = { $in: instruments };
     if (positions) query.positions = { $in: positions };
     if (genres) query.genres = { $in: genres };
@@ -176,8 +176,9 @@ const loadUsers = async (req, res) => {
     const allPositions = await Positions.find({});
     const allGenres = await Genres.find({});
     const allLanguages = await Languages.find({});
-    
-    res.render("users", { user: req.session.user, users, allInstruments, allPositions, allGenres, allLanguages});
+    const allCities = await Cities.find({});
+
+    res.render("users", { user: req.session.user, users, allInstruments, allPositions, allGenres, allLanguages, allCities});
   } catch (error) {
     console.log(error.message);
   }
@@ -552,10 +553,18 @@ const updateUserProfile = async (req, res) => {
     const validGenreIds = genreIds.filter(id => id !== null);
     const validLanguageIds = languageIds.filter(id => id !== null);
 
-    console.log('Valid City IDs:', cityId);
-
+    const updateData = {
+      instruments: validInstrumentIds,
+      positions: validPositionIds,
+      genres: validGenreIds,
+      languages: validLanguageIds
+    };
+    
+    if (cityId !== null) {
+      updateData.city = cityId;
+    }
     // Update the user's tags
-    await User.findByIdAndUpdate(userId, { instruments: validInstrumentIds, positions: validPositionIds, genres: validGenreIds, languages: validLanguageIds, city: cityId });
+    await User.findByIdAndUpdate(userId, { userId, updateData });
     
     res.redirect(`/profile/${userId}`);
   } catch (error) {
