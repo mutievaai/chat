@@ -1,7 +1,7 @@
 /* Global Styles */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-image: linear-gradient(to right, #192634,#133244, #255c8a, #717dc2, #567bbd, #0e4d74, #012e41, #162334, #1a1f2f, #221526);
     margin-top: 40px;
     padding: 32px 300px;
 }
@@ -32,7 +32,7 @@ button:hover {
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-image: linear-gradient(to right, #192634,#133244, #255c8a, #717dc2, #567bbd, #0e4d74, #012e41, #162334, #1a1f2f, #221526);
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
