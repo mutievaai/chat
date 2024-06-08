@@ -565,14 +565,12 @@ const updateUserProfile = async (req, res) => {
       instruments: validInstrumentIds,
       positions: validPositionIds,
       genres: validGenreIds,
-      languages: validLanguageIds
+      languages: validLanguageIds,
+      city: cityId 
     };
     
-    if (cityId !== null) {
-      updateData.city = cityId;
-    }
-    // Update the user's tags
-    await User.findByIdAndUpdate(userId, { userId, updateData });
+    await User.findByIdAndUpdate(userId, updateData);
+
     
     res.redirect(`/profile/${userId}`);
   } catch (error) {
