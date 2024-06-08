@@ -4,16 +4,39 @@ var mongoose = require("mongoose");
 const url =
   "mongodb+srv://kambardias4:admin789@cluster0.tfpxkjo.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 mongoose.connect(url);
+const cookieParser = require('cookie-parser');
 
 const app = require("express")();
-
+const T9n = require('t9n');
+const i18n = require('i18n');
+const path = require("path")
 const http = require("http").Server(app);
-
+const express = require("express");
 const userRoute = require("./routes/userRoute");
 const User = require("./models/userModel");
 const Chat = require("./models/chatModel");
 
+
+i18n.configure({
+  locals: ['en', 'ru', 'kz'], // Add more locales if needed
+  directory: path.join(__dirname, 'locales'),
+  defaultLocale: 'ru',
+  cookie: 'lang',
+  objectNotation: true,
+});
+app.use(cookieParser());
+
+app.use(i18n.init);
+app.use((req, res, next) => {
+  const lang = req.cookies.lang;
+  if (lang) {
+    res.setLocale(lang);
+  }
+  res.locals.currentLocale = res.getLocale(); // Make current locale available to templates
+  next();
+});
 app.use("/", userRoute);
+app.use(express.urlencoded({ extended: true }));
 
 const io = require("socket.io")(http);
 

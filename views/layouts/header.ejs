@@ -25,5 +25,14 @@
       <li><a href="/login"> login </a></li>
       <% } %>
     </ul>
+   
+    <form action="/change-language" method="POST">
+      <select name="lang" onchange="this.form.submit()">
+        <option value="en" <%= lang === 'en' ? 'selected' : '' %>>English</option>
+        <option value="ru" <%= lang === 'ru' ? 'selected' : '' %>>Русский</option>
+        <option value="kz" <%= lang === 'kz' ? 'selected' : '' %>>Қазақша</option>
+      </select>
+    </form>
+    
   </nav>
 </body>

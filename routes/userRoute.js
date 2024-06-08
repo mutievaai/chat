@@ -2,8 +2,7 @@ const express = require("express");
 const user_route = express();
 
 const bodyParser = require("body-parser");
-const cookieParser = require('cookie-parser')
-const smws = require("smws")
+
 
 const session = require("express-session");
 const { SESSION_SECRET } = process.env;
@@ -52,7 +51,11 @@ const auth = require("../middlewares/auth");
 user_route.get("/", userController.loadHomepage);
 
 user_route.post("/register", userController.register);
-
+user_route.post('/change-language', (req, res) => {
+  const lang = req.body.lang;
+  res.cookie('lang', lang, { maxAge: 900000, httpOnly: true });
+  res.redirect('back'); // Redirect back to the previous page
+});
 user_route.get("/login", auth.isLogout, userController.loadLogin);
 user_route.post("/login", userController.login);
 user_route.get("/logout", auth.isLogin, userController.logout);

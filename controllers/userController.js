@@ -39,7 +39,7 @@ const register = async (req, res) => {
 
 const loadLogin = async (req, res) => {
   try {
-    res.render("login");
+    res.render("login",{lang: res.locale });
   } catch (error) {
     console.log(error.message);
   }
@@ -160,7 +160,7 @@ const logout = async (req, res) => {
 
 const loadHomepage = async (req, res) => {
   try {
-    res.render("homepage", { user: req.session.user });
+    res.render("homepage", { user: req.session.user, lang: res.locale  });
   } catch (error) {
     console.log(error.message);
   }
@@ -185,13 +185,13 @@ const loadUsers = async (req, res) => {
     const allLanguages = await Languages.find({});
     const allCities = await Cities.find({});
 
-    res.render("users", { user: req.session.user, users, allInstruments, allPositions, allGenres, allLanguages, allCities});
+    res.render("users", { user: req.session.user, users, allInstruments, allPositions, allGenres, allLanguages, allCities, lang: res.locale});
   } catch (error) {
     console.log(error.message);
   }
 };
 
-const saveChat = async (req, res) => {
+const  saveChat = async (req, res) => {
   try {
     var chat = new Chat({
       sender_id: req.body.sender_id,
@@ -204,7 +204,7 @@ const saveChat = async (req, res) => {
       .status(200)
       .send({ success: true, msg: "Chat inserted", data: newChat });
   } catch (error) {
-    res.status(400).send({ success: false, msg: error.message });
+    res.status(400).send({ success: false, msg: error.message, lang: res.locale });
   }
 };
 
@@ -213,7 +213,7 @@ const loadActivity = async (req, res) => {
   try {
     var posts = await Post.find({});
     // console.log(posts)
-    res.render("activity", { user: req.session.user, posts: posts });
+    res.render("activity", { user: req.session.user, posts: posts, lang: res.locale });
   } catch (error) {
     console.log(error.message);
   }
@@ -226,7 +226,7 @@ const openPost = async (req, res) => {
       return res.status(400).send("Invalid post ID");
     }
     const comments = await Comment.find({ post_id: postId }).populate('user_id', 'name image');
-    res.render('post', { post, comments, user: req.session.user });
+    res.render('post', { post, comments, user: req.session.user, lang: res.locale });
   }catch(error){
     console.log(error.message)
   }
@@ -325,7 +325,7 @@ const getPosts = async (req, res) => {
 const loadAllUsers = async (req, res) => {
   try {
     var users = await User.find({});
-    res.render("admin", { user: req.session.user, users: users });
+    res.render("admin", { user: req.session.user, users: users, lang: res.locale });
   } catch (error) {
     console.log(error.message);
   }
@@ -402,7 +402,7 @@ const openProfile = async (req, res) => {
       allPositions: allPositions,
       allGenres: allGenres,
       allLanguages: allLanguages,
-      allCities: allCities
+      allCities: allCities, lang: res.locale
     });
   } catch (error) {
     console.error(error.message);
@@ -597,6 +597,7 @@ const loadFriends = async (req, res) => {
       user: req.session.user,
       friends: friends,
       friendRequests: friendRequests,
+      lang: res.locale
     });
   } catch (error) {
     console.error(error.message);
@@ -635,7 +636,7 @@ const acceptRequest = async (req, res) => {
     await requestingUser.save();
 
     // Redirect to friends page after successfully accepting the friend request
-    res.redirect("/friends");
+    res.redirect("/friends", {lang: res.locale});
   } catch (eror) {
     console.error(error.message);
   }
@@ -661,7 +662,7 @@ const declineRequest = async (req, res) => {
     // Save changes to the current user
     await currentUser.save();
     // Redirect to friends page after successfully declining the friend request
-    res.redirect("/friends");
+    res.redirect("/friends", {lang: res.locale});
   } catch (error) {
     console.error(error.message);
     res.status(500).redirect("/friends"); // Redirect to friends page on server error
