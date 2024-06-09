@@ -1,6 +1,7 @@
 body {
   margin-top: 3.7rem;
   font-family: Arial, sans-serif;
+  background-image: linear-gradient(to right, #192634,#133244, #255c8a, #717dc2, #567bbd, #0e4d74, #012e41, #162334, #1a1f2f, #221526);
 }
 .searchcontainer{
   justify-content: center;
