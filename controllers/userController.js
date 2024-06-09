@@ -204,7 +204,7 @@ const  saveChat = async (req, res) => {
       .status(200)
       .send({ success: true, msg: "Chat inserted", data: newChat });
   } catch (error) {
-    res.status(400).send({ success: false, msg: error.message, lang: res.locale });
+    res.status(400).send({ user: req.session.user, success: false, msg: error.message, lang: res.locale });
   }
 };
 
@@ -396,13 +396,15 @@ const openProfile = async (req, res) => {
     const allCities = await Cities.find({});
     res.render("profile", {
       user: req.session.user,
+      lang: res.locale, 
       profUser: profUser,
       status: status,
       allInstruments: allInstruments,
       allPositions: allPositions,
       allGenres: allGenres,
       allLanguages: allLanguages,
-      allCities: allCities, lang: res.locale
+      allCities: allCities, 
+      
     });
   } catch (error) {
     console.error(error.message);
@@ -438,7 +440,6 @@ const sendFriendRequest = async (req, res) => {
     res.status(500).send("Server error");
   }
 };
-
 const uploadProfileImage = async (req, res) => {
   try {
     const imagePath = req.file.path;
@@ -572,7 +573,7 @@ const updateUserProfile = async (req, res) => {
     await User.findByIdAndUpdate(userId, updateData);
 
     
-    res.redirect(`/profile/${userId}`);
+    res.redirect(`/profile/${userId}`,{ lang: res.locale});
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Server Error" });
@@ -636,7 +637,7 @@ const acceptRequest = async (req, res) => {
     await requestingUser.save();
 
     // Redirect to friends page after successfully accepting the friend request
-    res.redirect("/friends", {lang: res.locale});
+    res.redirect("/friends", {user: req.session.user, lang: res.locale});
   } catch (eror) {
     console.error(error.message);
   }
@@ -662,7 +663,7 @@ const declineRequest = async (req, res) => {
     // Save changes to the current user
     await currentUser.save();
     // Redirect to friends page after successfully declining the friend request
-    res.redirect("/friends", {lang: res.locale});
+    res.redirect("/friends", {user: req.session.user, lang: res.locale});
   } catch (error) {
     console.error(error.message);
     res.status(500).redirect("/friends"); // Redirect to friends page on server error

@@ -16,13 +16,13 @@
         <% if (friendRequests.length > 0) { %> 
             <% for(let i = 0; i < friendRequests.length; i++) { %> 
                 <div class="user-item" data-id="<%= friendRequests[i]._id %>"> 
-                    <img src="data:image/jpeg;base64,<%= friendRequests[i].image %>" alt="User image" class="user-icon" /> 
+                    <img src="data:image/jpeg;base64,<%= friendRequests[i].image %>" alt="<%= __('User image') %>" class="user-icon" /> 
                     <p class="user-name"><%= friendRequests[i].name %> </p> 
                     <form action="/accept-request/<%= friendRequests[i]._id %>" method="post" style="display: inline;"> 
-                        <button type="submit" class="btn btn-success">Accept</button> 
+                        <button type="submit" class="btn btn-success"><%= __('Accept') %></button> 
                     </form> 
                     <form action="/decline-request/<%= friendRequests[i]._id %>" method="post" style="display: inline;"> 
-                        <button type="submit" class="btn btn-danger">Decline</button> 
+                        <button type="submit" class="btn btn-danger"><%= __('Decline') %></button> 
                     </form> 
                 </div> 
             <% } %> 
@@ -30,28 +30,28 @@
         <% if (friends.length > 0) { %> 
             <% friends.forEach(friend => { %> 
                 <div class="user-item" data-id="<%= friend._id %>" data-name="<%= friend.name %>" data-icon="data:image/jpeg;base64,<%= friend.image %>"> 
-                    <img src="data:image/jpeg;base64,<%= friend.image %>" alt="User image" class="user-icon" /> 
+                    <img src="data:image/jpeg;base64,<%= friend.image %>" alt="<%= __('User image') %>" class="user-icon" /> 
                     <p class="user-name" ><%= friend.name %></p> 
                 </div> 
             <% }); %> 
         </div> 
  
         <% } else { %> 
-            <h4>You have no friends</h4> 
+            <h4><%= __('You have no friends') %></h4> 
         <% } %> 
  
         <!-- Chat Window --> 
         <div class="chat-window"> 
             <a class="chat-user-link" href=""> 
                 <div class="chat-header"> 
-                    <img src="" alt="Chat User" class="chat-user-icon"> 
+                    <img src="" alt="<%= __('Chat User') %>" class="chat-user-icon"> 
                     <p class="chat-user-name"></p> 
                 </div> 
             </a> 
              
              
             <div class="start-head"> 
-                Start a conversation 
+                <%= __('Start a conversation') %> 
             </div> 
             <div class="chat-section" style="display: none;"> 
                 <div id="chat-container" class="chat-messages"> 
@@ -60,7 +60,7 @@
                 <div class="chat-input"> 
                     <form id="chat-form"> 
                         <input type="text" id="message"> 
-                        <button type="submit">Send</button> 
+                        <button type="submit"><%= __('Send') %></button> 
                     </form> 
                 </div> 
             </div> 
