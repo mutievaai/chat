@@ -395,7 +395,6 @@ const openProfile = async (req, res) => {
     const allLanguages = await Languages.find({});
     const allCities = await Cities.find({});
     res.render("profile", {
-      user: req.session.user,
       lang: res.locale, 
       profUser: profUser,
       status: status,

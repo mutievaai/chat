@@ -20,7 +20,7 @@ const Chat = require("./models/chatModel");
 i18n.configure({
   locals: ['en', 'ru', 'kz'], // Add more locales if needed
   directory: path.join(__dirname, 'locales'),
-  defaultLocale: 'ru',
+  defaultLocale: 'en',
   cookie: 'lang',
   objectNotation: true,
 });
