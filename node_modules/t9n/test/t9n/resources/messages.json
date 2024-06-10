@@ -1,0 +1,26 @@
+{
+  "en": {
+    "hello": "Hello",
+    "greet": "Hi",
+    "action": {
+      "click": "Click",
+      "back": "Back",
+      "save": {
+        "save-as": "Save As",
+        "save-draft": "Save Draft"
+      },
+      "ask": "I want to {question}",
+      "prompt": "Hi {name}, please enter your {input}"
+    },
+    "user": {
+      "profile": "Profile"
+    }
+  },
+  "id": {
+    "hello": "Halo",
+    "greet": "Hai",
+    "user": {
+      "profile": "Profil Saya"
+    }
+  }
+}

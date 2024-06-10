@@ -1,18 +1,17 @@
-<%- include('layouts/header.ejs') %>  
-<head> 
+<%- include('layouts/header.ejs') %>
+<head>
     <link rel="stylesheet" href="/css/activity.css">
     <link rel="stylesheet" href="/css/navbar.css">
-</head> 
- 
-<h3 class="mb-4">Music Posts </h3> 
+</head>
 
+<h3 class="mb-4"><%= __('Music Posts') %></h3>
 
 <div class="container">
     <div class="row">
             <div class="list-group"> 
                 <% if (posts.length > 0) { %> 
                     <% for(let i = 0; i < posts.length; i++){ %> 
-                        <a href="/post/<%= posts[i]['_id'] %>">
+                        <a href="/post/<%= posts[i]['_id'] %>" class="post-link">
                             <div class="post-item"> 
                                 <div class="post-content-image"> 
                                     <img src="data:image/jpeg;base64,<%= posts[i]['image'] %>" alt="User image" /> 
@@ -20,42 +19,37 @@
                                 <div class="post-content-title">
                                     <h2 class="post-title"><%= posts[i]['title'] %></h2> 
                                 </div>
-                                
-                            </div>
-                            <div class="post-link">
-                            <%if (user.role == "admin") {%>
-                                <form action="/delete-post/<%= posts[i]['_id'] %>" method="post">
-                                    <button type="submit">Delete Post</button>
-                                </form>
-                            <% } %>
                             </div>
                         </a>
-                        
+                        <%if (user.role == "admin") {%>
+                            <form action="/delete-post/<%= posts[i]['_id'] %>" method="post">
+                                <button type="submit">Delete Post</button>
+                            </form>
+                        <% } %>
                     <% } %> 
                 <% } %> 
             </div>
     </div>
 </div>
- 
-<% if (user.role == "admin") {%> 
-    <button id="openModalBtn">Create Post</button> 
-    <!-- The Modal --> 
-    <div id="myModal" class="modal"> 
-        <div class="modal-content"> 
-            <span class="close">&times;</span> 
-            <h2>Create Post</h2> 
-            <form id="createPostForm" action="" method="POST" enctype="multipart/form-data"> 
-                <label for="postTitle">Title:</label> 
-                <input type="text" id="postTitle" name="title" required><br><br> 
-                <label for="postImage">Image:</label> 
-                <input type="file" name="image" required /><br><br> 
-                <label for="postContent">Content:</label> 
-                <textarea id="postContent" name="content" required></textarea><br><br> 
-                <button type="submit">Create</button> 
-            </form> 
-        </div> 
-    </div> 
 
-    
-<% } %> 
-<script src="js/create-post.js"></script> 
+<% if (user.role === "admin") { %>
+    <button id="openModalBtn"><%= __('Create Post') %></button>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2><%= __('Create Post') %></h2>
+            <form id="createPostForm" action="" method="POST" enctype="multipart/form-data">
+                <label for="postTitle"><%= __('Title') %>:</label>
+                <input type="text" id="postTitle" name="title" required><br><br>
+                <label for="postImage"><%= __('Image') %>:</label>
+                <input type="file" name="image" required /><br><br>
+                <label for="postContent"><%= __('Content') %>:</label>
+                <textarea id="postContent" name="content" required></textarea><br><br>
+                <button type="submit"><%= __('Create') %></button>
+            </form>
+        </div>
+    </div>
+<% } %>
+
+<script src="js/create-post.js"></script>

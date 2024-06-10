@@ -1,13 +1,11 @@
 <%- include('layouts/header.ejs') %>
-<head> 
+<head>
   <link rel="stylesheet" href="/css/navbar.css">
   <link rel="stylesheet" href="/css/users.css">
   <link rel="stylesheet" href="/css/modal.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
+</head>
 
-</head> 
-  
-<!-- <h2 class="mb-4">Hii, <%= user.name %></h2> -->
 <div class="searchcontainer col-md-6">
   <!-- Search / name-city -->
   <div class="top-search-bar"> 
@@ -15,22 +13,23 @@
       <div class="inlinecontainer">
         <image src="../images/Lupa.png" style="width: 23px; height: 23px;">
         <!-- <label for="name">Name:</label> -->
-        <input class="inpt" type="text" id="name" name="name" placeholder="Find by Username">
-        <button type="submit" class="btn">Search</button>
-        <button type="button" class="btn" id="openModalBtn">Advanced Search</button>      </div>
+        <input class="inpt" type="text" id="name" name="name" placeholder="<%= __('Find by Username') %>">
+        <button type="submit" class="btn"><%= __('Search') %></button>
+        <button type="button" class="btn" id="openModalBtn"><%= __('Advanced Search') %></button>
+      </div>
     </form>
   </div>
-</div> 
-  <!-- MODAL FOR DETAILED SEARCH -->
-  <!-- The Modal --> 
+</div>
+
+<!-- MODAL FOR DETAILED SEARCH -->
 <div id="myModal" class="modal"> 
   <div class="modal-content"> 
     <span class="close">&times;</span> 
-    <h2>Detailed Search</h2> 
+    <h2><%= __('Detailed Search') %></h2> 
     <form id="detailedSearch" action="/users" method="get"> 
-      <label for="Name">Name:</label> 
-      <input class= "" type="text" id="name" name="name"> <br>
-      <label for="city">City:</label>
+      <label for="Name"><%= __('Name') %>:</label> 
+      <input class="" type="text" id="name" name="name"> <br>
+      <label for="city"><%= __('City') %>:</label>
       <select class="select-class" style="width: 175px" name="city">
         <% allCities.forEach(city => { %>
           <option value="<%= city._id %>" > 
@@ -38,7 +37,7 @@
           </option>
         <% }) %>
       </select>
-      <label for="positions">Roles:</label>
+      <label for="positions"><%= __('Roles') %>:</label>
       <select class="select-class" style="width: 175px" name="positions" multiple="multiple">
         <% allPositions.forEach(position => { %>
           <option value="<%= position._id %>"> 
@@ -46,7 +45,7 @@
           </option>
         <% }) %>
       </select> <br>
-      <label for="instruments">Instruments:</label>
+      <label for="instruments"><%= __('Instruments') %>:</label>
       <select class="select-class" style="width: 175px" name="instruments" multiple="multiple">
         <% allInstruments.forEach(instrument => { %>
           <option value="<%= instrument._id %>">
@@ -54,7 +53,7 @@
           </option>
         <% }) %>
       </select> <br>
-      <label for="genres">Genres:</label>
+      <label for="genres"><%= __('Genres') %>:</label>
       <select class="select-class" style="width: 175px" name="genres" multiple="multiple">
         <% allGenres.forEach(genre => { %>
           <option value="<%= genre._id %>">
@@ -62,7 +61,7 @@
           </option>
         <% }) %>
       </select> <br>
-      <label for="languages">Languages:</label>
+      <label for="languages"><%= __('Languages') %>:</label>
       <select class="select-class" style="width: 175px" name="languages" multiple="multiple">
         <% allLanguages.forEach(language => { %>
           <option value="<%= language._id %>"> 
@@ -70,29 +69,21 @@
           </option>
         <% }) %>
       </select>
-      <button type="submit" class="botn">Find</button> 
+      <button class="botn" type="submit"><%= __('Find') %></button> 
     </form> 
-  </div> 
-
-    <!-- <div class="bot-search-bar">
-      <div class="inlinecontainer">
-        
-          <button type="reset">Clear Filters</button>
-      </div>
-    </div> -->
+  </div>
 </div>
 
 <div class="user-container"> 
   <% if (users.length > 0) { %>  
-  <%for(let i = 0; i < users.length; i++){ %> 
-    <a href="/profile/<%=users[i]['_id'] %>"> 
-      <div class = "user-card"> 
-        <img src="data:jpeg;base64,<%= users[i]['image'] %>" alt="User image" class="user-image"/> 
-        <p class="user-name"> <%=users[i]['name']%> </p> 
-      </div> 
-    </a>   
-  <% } } %> 
-   
+    <% for(let i = 0; i < users.length; i++){ %> 
+      <a href="/profile/<%=users[i]['_id'] %>"> 
+        <div class="user-card"> 
+          <img src="data:jpeg;base64,<%= users[i]['image'] %>" alt="<%= __('User image') %>" class="user-image"/> 
+          <p class="user-name"><%=users[i]['name']%></p> 
+        </div> 
+      </a>   
+    <% } } %> 
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

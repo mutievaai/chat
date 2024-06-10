@@ -1,43 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
 <head> 
   <link rel="stylesheet" href="/css/navbar.css">
   <link rel="stylesheet" href="/css/profile.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 </head> 
-<%- include('layouts/header.ejs') %>
 
+<%- include('layouts/header.ejs') %>
 
 <body>
   <div class="profile-container">
     <div class="profile-content">
         <div class="profile-photo">
-            <img src="data:jpeg;base64,<%= profUser.image %>" alt="Profile Picture" class="profile-picture">
-            <% if (status == "you") {%>
+            <img src="data:jpeg;base64,<%= profUser.image %>" alt="<%= __('Profile Picture') %>" class="profile-picture">
+            <% if (status == "you") { %>
               <form action="/profile" method="post" enctype="multipart/form-data">
-                  <label for="image">Update user profile image:</label>
+                  <label for="image"><%= __('Update user profile image:') %></label>
                   <input type="file" name="image" id="image" accept="image/*" required />
-                  <button type="submit">Upload</button>
+                  <button type="submit"><%= __('Upload') %></button>
               </form>
-            <% }else if (status == "user"){ %>
+            <% } else if (status == "user") { %>
               <form action="/friend-request/<%= profUser._id %>" method="post"> 
-                <button type="submit">Send request</button> 
+                <button type="submit"><%= __('Send request') %></button> 
               </form>
-            <% }else if (status == "friend-request"){ %>
-              <p style="color: blue;">friend request already send</p>
-            <% }else if (status == "friend"){ %> 
-              <p style="color:green">User is your friend</p>
-            <%} %>
+            <% } else if (status == "friend-request") { %>
+              <p style="color: blue;"><%= __('friend request already send') %></p>
+            <% } else if (status == "friend") { %> 
+              <p style="color:green"><%= __('User is your friend') %></p>
+            <% } %>
         </div>
         <div class="profile-info">
           <header class="profile-header">
-              <p> <%= profUser.name %></p>
+              <p><%= profUser.name %></p>
           </header>
           <main class="profile-main">
             <section class="social">
-              <h2>My Skils:</h2>
+              <h2><%= __('My Skills:') %></h2>
               <ul class="social-list"> 
-                <% if (status == "you") {%>
+                <% if (status == "you") { %>
                   <form id="profile-form" action="/updateUserProfile" method="POST">
-                    <li><b>City: </b><%= profUser.city ? profUser.city.name : "City not specified" %></li>
+                    <li><b><%= __('City:') %> </b><%= profUser.city ? profUser.city.name : __('City not specified') %></li>
                       <select class="select-class" name="city" style="width: 300px">
                         <% allCities.forEach(city => { %>
                           <option value="<%= city.name %>" 
@@ -49,7 +51,7 @@
                           </option>
                         <% }) %>
                       </select>
-                    <li><b>Musical instruments: </b> <%= profUser.instruments.map(instrument => instrument.name).join(', ') %></li>
+                    <li><b><%= __('Musical instruments:') %> </b> <%= profUser.instruments.map(instrument => instrument.name).join(', ') %></li>
                     <select class="select-class" name="instruments" multiple="multiple" style="width: 300px">
                       <% allInstruments.forEach(instrument => { %>
                       <option value="<%= instrument.name %>" 
@@ -60,7 +62,7 @@
                       </option>
                       <% }) %>
                     </select>
-                    <li><b>Musical roles:</b> <%= profUser.positions.map(position => position.name).join(', ') %></li>
+                    <li><b><%= __('Musical roles:') %> </b> <%= profUser.positions.map(position => position.name).join(', ') %></li>
                     <select class="select-class" name="positions" multiple="multiple" style="width: 300px">
                       <% allPositions.forEach(position => { %>
                         <option value="<%= position.name %>"
@@ -72,11 +74,10 @@
                         </option>
                       <% }) %>
                     </select>
-                    <li><b>Musical genres:</b> <%= profUser.genres.map(genre => genre.name).join(', ') %></li>
+                    <li><b><%= __('Musical genres:') %> </b> <%= profUser.genres.map(genre => genre.name).join(', ') %></li>
                     <select class="select-class" name="genres" multiple="multiple" style="width: 300px">
                       <% allGenres.forEach(genre => { %>
-                        <option
-                          value="<%= genre.name %>"
+                        <option value="<%= genre.name %>"
                           <% if (profUser.genres.some(genreRef => genreRef.name === genre.name)) { %>
                             selected 
                           <% } %> 
@@ -85,11 +86,10 @@
                         </option>
                       <% }) %>
                     </select>
-                    <li><b>Musical languages:</b> <%= profUser.languages.map(language => language.name).join(', ') %></li>
+                    <li><b><%= __('Musical languages:') %> </b> <%= profUser.languages.map(language => language.name).join(', ') %></li>
                     <select class="select-class" name="languages" multiple="multiple" style="width: 300px" >
                       <% allLanguages.forEach(language => { %>
-                        <option
-                          value="<%= language.name %>"
+                        <option value="<%= language.name %>"
                           <%if (profUser.languages.some(languageRef => languageRef.name === language.name)) { %>
                             selected 
                           <% } %> 
@@ -98,55 +98,51 @@
                         </option>
                       <% }) %>
                     </select>
-                    <button class="save-button" type="submit" style="display: none">Save Changes</button>
-
+                    <button class="save-button" type="submit" style="display: none"><%= __('Save') %></button>
                   </form>
-                <%}else{%>
-                  <li><b>City:</b> <%= profUser.city ? profUser.city.name : "City not specified" %></li>
-                  <li><b>Musical instruments:</b> <%= profUser.instruments.map(instrument => instrument.name).join(', ') %></li>
-                  <li><b>Musical roles:</b> <%= profUser.positions.map(position => position.name).join(', ') %></li>
-                  <li><b>Musical genres:</b> <%= profUser.genres.map(genre => genre.name).join(', ') %></li>
-                  <li><b>Musical languages:</b> <%= profUser.languages.map(language => language.name).join(', ') %></li>
-                <%}%>
+                <% } else { %>
+                  <li><b><%= __('City:') %></b> <%= profUser.city ? profUser.city.name : __('City not specified') %></li>
+                  <li><b><%= __('Musical instruments:') %></b> <%= profUser.instruments.map(instrument => instrument.name).join(', ') %></li>
+                  <li><b><%= __('Musical roles:') %></b> <%= profUser.positions.map(position => position.name).join(', ') %></li>
+                  <li><b><%= __('Musical genres:') %></b> <%= profUser.genres.map(genre => genre.name).join(', ') %></li>
+                  <li><b><%= __('Musical languages:') %></b> <%= profUser.languages.map(language => language.name).join(', ') %></li>
+                <% } %>
               </ul>
           </section>
             <section class="about">
-              <h2>About me:</h2> 
-              <% if (status == "you") {%> 
+              <h2><%= __('About me:') %></h2> 
+              <% if (status == "you") { %> 
                 <form action="/update-about-me" method="post"> 
                     <textarea name="aboutMe" rows="4" cols="50"><%= profUser.aboutMe %></textarea> 
-                    <button type="submit">Save</button> 
+                    <button type="submit"><%= __('Save') %></button> 
                 </form> 
                 <% } else { %> 
                     <p><%= profUser.aboutMe %></p> 
                 <% } %>
             </section>
             <section class="music">
-              <h2>Audio:</h2>
+              <h2><%= __('Audio:') %></h2>
               <ul class="music-list">
                 <% profUser.music.forEach(function(music, index) { %> 
                   <li> 
-                    <p> <%= music.title %> </p>
+                    <p><%= music.title %></p>
                     <audio controls> 
                       <source src="data:audio/mp3;base64,<%= music.data %>" type="audio/mp3" /> 
-                      Your browser does not support the audio element. 
+                      <%= __('Your browser does not support the audio element.') %>
                     </audio> 
                     <% if (status == "you") { %> 
-                      <form 
-                        action="/delete-music/<%= profUser._id %>/<%= index %>" 
-                        method="post" 
-                        style="display: inline"> 
-                        <button type="submit">Delete</button> 
+                      <form action="/delete-music/<%= profUser._id %>/<%= index %>" method="post" style="display: inline"> 
+                        <button type="submit"><%= __('Delete') %></button> 
                       </form> 
                     <% } %> 
                   </li> 
-                  <% }) %>
+                <% }) %>
               </ul>
-              <% if (status == "you") {%>
+              <% if (status == "you") { %>
               <form action="/upload-music" method="post" enctype="multipart/form-data">
-                  <label for="music">Загрузить музыку:</label>
+                  <label for="music"><%= __('Upload Music:') %></label>
                   <input type="file" name="music" id="music" accept="audio/*" required />
-                  <button type="submit">Загрузить</button>
+                  <button type="submit"><%= __('Upload') %></button>
               </form>
               <% } %>
             </section>
@@ -154,8 +150,8 @@
         </div>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+  <script src="/js/profile.js"></script>
 </body>
 </html>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-<script src="/js/profile.js"></script>

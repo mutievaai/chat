@@ -1,29 +1,41 @@
-<!-- <html lang="en"> -->
+<!DOCTYPE html>
+<html lang="<%= lang %>">
+
 <head>
-  <title>Music Collaboration Platform</title>
+  <title><%= __('Music Collaboration Platform') %></title>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- <link rel="stylesheet" href="css/navbar.css"/> -->
 </head>
+
 <body>
   <nav class="navbar fixed-top">
     <div class="navbar-brand">
-      <a href="/">Musician Collaboration Platform</a>
+      <a href="/">MCP</a>
     </div>
     <ul class="navbar-nav">
-      <li><a href="/dashboard">Home Page</a></li>
+      <li><a href="/dashboard"><%= __('Home Page') %></a></li>
       <% if (isAuthenticated) { %>
-      <li><a href="/activity">Activity</a></li>
-      <li><a href="/users">Users</a></li>
-      <li><a href="/friends">Friends</a></li>
-      <% if (user.role == "admin") {%>
-      <li><a href="/admin"> Admin Panel </a></li>
+      <li><a href="/activity"><%= __('Activity') %></a></li>
+      <li><a href="/users"><%= __('Users') %></a></li>
+      <li><a href="/friends"><%= __('Friends') %></a></li>
+      <% if (user.role === "admin") { %>
+      <li><a href="/admin"><%= __('Admin Panel') %></a></li>
       <% } %>
-      <li><a href="/profile/<%= user._id %>">Profile</a></li>
-      <li><a href="/logout">Logout</a></li>
+      <li><a href="/profile/<%= user._id %>"><%= __('Profile') %></a></li>
+      <li><a href="/logout"><%= __('Logout') %></a></li>
       <% } else { %>
-      <li><a href="/login"> Login </a></li>
+      <li><a href="/login"><%= __('Login') %></a></li>
       <% } %>
     </ul>
+
+    <form action="/change-language" method="POST">
+      <select name="lang" onchange="this.form.submit()">
+        <option value="en" <%= lang === 'en' ? 'selected' : '' %>>English</option>
+        <option value="ru" <%= lang === 'ru' ? 'selected' : '' %>>Русский</option>
+        <option value="kz" <%= lang === 'kz' ? 'selected' : '' %>>Қазақша</option>
+      </select>
+    </form>
+
   </nav>
 </body>
