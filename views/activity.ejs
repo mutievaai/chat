@@ -12,7 +12,7 @@
             <div class="list-group"> 
                 <% if (posts.length > 0) { %> 
                     <% for(let i = 0; i < posts.length; i++){ %> 
-                        <a href="/post/<%= posts[i]['_id'] %>" class="post-link">
+                        <a href="/post/<%= posts[i]['_id'] %>">
                             <div class="post-item"> 
                                 <div class="post-content-image"> 
                                     <img src="data:image/jpeg;base64,<%= posts[i]['image'] %>" alt="User image" /> 
@@ -20,13 +20,17 @@
                                 <div class="post-content-title">
                                     <h2 class="post-title"><%= posts[i]['title'] %></h2> 
                                 </div>
+                                
+                            </div>
+                            <div class="post-link">
+                            <%if (user.role == "admin") {%>
+                                <form action="/delete-post/<%= posts[i]['_id'] %>" method="post">
+                                    <button type="submit">Delete Post</button>
+                                </form>
+                            <% } %>
                             </div>
                         </a>
-                        <%if (user.role == "admin") {%>
-                            <form action="/delete-post/<%= posts[i]['_id'] %>" method="post">
-                                <button type="submit">Delete Post</button>
-                            </form>
-                        <% } %>
+                        
                     <% } %> 
                 <% } %> 
             </div>

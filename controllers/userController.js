@@ -97,8 +97,8 @@ const requestPasswordReset = async (req, res) => {  //2
     host: 'smtp.ethereal.email',
     port: 587,
     auth: {
-      user: 'kiel.hodkiewicz@ethereal.email',
-      pass: 'WsrwAg4gua2mTd43YJ',
+      user: 'adelle.bins55@ethereal.email',
+      pass: 'ebsqUjYSgVJQRcEysS',
     }
   });
   const mailOptions = {

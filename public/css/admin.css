@@ -1,0 +1,57 @@
+.admin-container {
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 15%;
+
+}
+body{
+  color: black;
+}
+.admin-content{
+  /* /* text-align: -webkit-center; */
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background: linear-gradient(90deg, #ffffff, #9fd5f8);
+}
+
+.editUserBtn{
+  padding: 0.75rem 1.5rem;
+  background-color: #3666bd;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: none;
+}
+.editUserBtn:hover {
+  background-color: #0056b3;
+}
+td{
+  text-align: center; 
+  vertical-align: middle;
+}
+
+.UserBtn {
+  /* padding: 0.75rem 1.5rem; */
+  background-color: #3666bd;
+  width: 120px; 
+  height: 32px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: none;
+}
+
+.UserBtn:hover {
+  background-color: #0056b3;
+}

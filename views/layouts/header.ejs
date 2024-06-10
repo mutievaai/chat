@@ -17,12 +17,12 @@
       <li><a href="/users">Users</a></li>
       <li><a href="/friends">Friends</a></li>
       <% if (user.role == "admin") {%>
-      <li><a href="/admin"> admin panel </a></li>
+      <li><a href="/admin"> Admin Panel </a></li>
       <% } %>
       <li><a href="/profile/<%= user._id %>">Profile</a></li>
-      <li><a href="/logout">logout</a></li>
+      <li><a href="/logout">Logout</a></li>
       <% } else { %>
-      <li><a href="/login"> login </a></li>
+      <li><a href="/login"> Login </a></li>
       <% } %>
     </ul>
   </nav>

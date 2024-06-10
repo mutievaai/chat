@@ -85,7 +85,7 @@ body {
   margin-bottom: 20px;
   font-size: 40px;
   font-family: serif;
-  margin-left: 20%;
+  margin-left: 2%;
 }
 
 .profile-header h1 {
@@ -101,6 +101,7 @@ body {
 
 .profile-main {
   padding: 0;
+  margin: 2%;
 }
 
 .profile-main h2 {
@@ -136,7 +137,7 @@ body {
   max-width: 600px;
   margin: 0 auto;
   border-radius: 10px;
-  background: linear-gradient(90deg, #17a8c3,#367678,#364642);
+  background: linear-gradient(90deg, #17a8c3,#367678,#364642,0.5);
   padding: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s, box-shadow 0.3s;
