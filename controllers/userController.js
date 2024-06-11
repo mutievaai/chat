@@ -111,7 +111,7 @@ const forgotPassword = async (req, res) => {
       from: process.env.MY_GMAIL,
       to: email,
       subject: "Password Reset Request",
-      text: `Click on this link to reset your password: ${process.env.CLIENT_URL}/resetPassword/${token}`,
+      text: `Click on this link to reset your password: ${process.env.CLIENT_URL}/${token}`,
     };
 
     await transporter.sendMail(mailOptions);
@@ -177,6 +177,16 @@ const resetPassword = async (req, res) => {
     const { token } = req.params;
     const { newPassword } = req.body;
 
+    // Check if newPassword is provided
+    if (!newPassword) {
+      return res.status(400).send({ message: 'Please provide a new password.' });
+    }
+
+    // Validate newPassword
+    if (!isValidPassword(newPassword)) {
+      return res.status(400).send({ message: 'Invalid password format. Password must be at least 8 characters long.' });
+    }
+
     const user = await User.findOne({
       resetPasswordToken: token,
       resetPasswordExpires: { $gt: Date.now() },
@@ -193,12 +203,18 @@ const resetPassword = async (req, res) => {
     user.resetPasswordExpires = undefined;
     await user.save();
 
-    res.status(200).send({ message: 'Password has been reset.' });
+    res.status(200).send({ message: 'Password has been reset successfully.' });
 
   } catch (error) {
-    res.status(500).send({ message: 'Something went wrong.' });
+    console.error('Error resetting password:', error);
+    res.status(500).send({ message: 'Something went wrong while resetting the password.' });
   }
 };
+
+// Helper function to validate password
+function isValidPassword(password) {
+  return password.length >= 8;
+}
 
 
 const logout = async (req, res) => {
