@@ -88,12 +88,15 @@
 	"Save": "Сақтау",
 	"Audio:": "Аудио:",
 	"Upload music:": "Музыка жүктеу:",
-	"My Skills": "My Skills",
-	"Musical instruments": "Musical instruments",
-	"Musical roles": "Musical roles",
-	"Musical genres": "Musical genres",
-	"Musical languages": "Musical languages",
-	"About me": "About me",
-	"Audio": "Audio",
-	"Your browser does not support the audio element.": "Your browser does not support the audio element."
+  "Update user profile image": "Пайдаланушы профиль суретін жаңарту",
+  "My Skills": "Менің дағдыларым",
+  "Musical instruments": "Музыкалық аспаптар",
+  "Musical roles": "Музыкалық рөлдер",
+  "Musical genres": "Музыкалық жанрлар",
+  "Musical languages": "Музыкалық тілдер",
+  "About me": "Мен туралы",
+  "Audio": "Аудио",
+  "Upload Music": "Музыкалық файлдарды жүктеу",
+	"forgot_pass": "Забыли пароль"
+
 }
