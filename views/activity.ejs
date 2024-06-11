@@ -1,3 +1,4 @@
+
 <%- include('layouts/header.ejs') %>
 <head>
     <link rel="stylesheet" href="/css/activity.css">
@@ -20,12 +21,13 @@
                                 <h2 class="post-title"><%= posts[i]['title'] %></h2>
                             </div>
                         </div>
+                        <% if (user.role === "admin") { %>
+                            <form action="/delete-post/<%= posts[i]['_id'] %>" method="post">
+                                <button type="submit"><%= __('Delete Post') %></button>
+                            </form>
+                        <% } %>
                     </a>
-                    <% if (user.role === "admin") { %>
-                        <form action="/delete-post/<%= posts[i]['_id'] %>" method="post">
-                            <button type="submit"><%= __('Delete Post') %></button>
-                        </form>
-                    <% } %>
+                    
                 <% } %>
             <% } %>
         </div>

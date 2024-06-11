@@ -32,7 +32,7 @@ button:hover {
 }
 
 .modal-content {
-    background-image: linear-gradient(to right, #192634,#133244, #255c8a, #717dc2, #567bbd, #0e4d74, #012e41, #162334, #1a1f2f, #221526);
+    background: white;
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
@@ -62,13 +62,16 @@ a {
 .post-link {
     display: block;
     color: inherit; /* Inherit the color from the parent element */
+    border-bottom: double;
 }
 
 .list-group {
     width: 100%;
     border-radius: 5px;
 }
-
+.mb-4{
+    color:white;
+}
 .container {
     width: 100%;
     margin: auto;
@@ -83,10 +86,10 @@ a {
     align-items: center;
     justify-content: start;
     gap: 20px;
-    border-bottom: 1px solid #ccc;
     margin-bottom: 10px;
 
 }
+
 
 .post-content-image img {
     width: 100%;
@@ -108,5 +111,6 @@ a {
 
 .post-title {
     font-size: 24px;
-    margin: 0;
+    margin-right: 10px;
+    color:black;
 }

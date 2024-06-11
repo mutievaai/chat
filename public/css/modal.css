@@ -4,6 +4,11 @@
 /* Apply font to the body */
 body {
   font-family: 'Roboto', sans-serif;
+  background: linear-gradient(to right, #192634,#133244, #255c8a, #717dc2, #567bbd, #0e4d74, #012e41, #162334, #1a1f2f, #221526);
+  color: white;
+}
+.select2-results__option[aria-selected] {
+  color: black;
 }
 
 /* Style the modal */

@@ -2,7 +2,8 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f4f4f4;
+  background: linear-gradient(to right, #192634,#133244, #255c8a, #717dc2, #567bbd, #0e4d74, #012e41, #162334, #1a1f2f, #221526);
+  margin-top: 5%;
 }
 
 .post-container {
@@ -36,9 +37,10 @@ body {
 }
 
 img.post-avatar{ 
-  height: 50px;
-  width: 50px;;
+  width: 50px;
+  border-radius: 50px;
 }
+
 .comments {
   width: 800px;
   margin: 0 auto;
