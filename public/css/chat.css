@@ -1,3 +1,4 @@
+
 body { 
     height: 90%; 
     font-family: Arial, sans-serif; 
@@ -46,6 +47,32 @@ body {
     border-radius: 50%; 
     margin-right: 10px; 
 } 
+.user-icon-container {
+    position: relative;
+}
+ 
+/* .user-icon {
+width: 40px;
+height: 40px;
+border-radius: 50%;
+} */
+ 
+.status-dot {
+width: 7px;
+height: 7px;
+background-color: green;
+border-radius: 50%;
+position: absolute;
+/* right: 1px; */
+bottom: 1px;
+border: 1px solid white; /* Optional: to give a nice border around the dot */
+display: none;
+}
+ 
+.user-item.online .status-dot {
+display: block;
+}
+ 
  
 .user-name { 
     font-size: 16px; 
@@ -156,4 +183,41 @@ body {
 a { 
     text-decoration: none; 
     color: inherit; /* This will make the link inherit the color of the surrounding text */ 
-  }
+}
+
+
+.btn1 {
+/* padding: 0.75rem 1.5rem; */
+background-color: #3666bd;
+width: 75px; 
+height: 32px;
+color: #fff;
+border: none;
+border-radius: 4px;
+font-size: 0.8rem;
+cursor: pointer;
+transition: background-color 0.3s ease;
+outline: none;
+margin-right: 10px;
+margin-left: 10px;
+}
+
+.btn2 {
+/* padding: 0.75rem 1.5rem; */
+background-color: #bd3636;
+width: 75px; 
+height: 32px;
+color: #fff;
+border: none;
+border-radius: 4px;
+font-size: 0.8rem;
+cursor: pointer;
+transition: background-color 0.3s ease;
+outline: none;
+}
+.btn1:hover {
+background-color: #0056b3;
+}
+.btn2:hover {
+background-color: #b30000;
+}

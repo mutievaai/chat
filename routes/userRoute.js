@@ -62,7 +62,7 @@ user_route.get("/logout", auth.isLogin, userController.logout);
 
 user_route.get('/forgotPassword', auth.isLogout, userController.forgotPasswordPage);
 user_route.post('/forgotPassword', auth.isLogout, userController.forgotPassword);
-user_route.post('/requestPasswordReset', auth.isLogout, userController.requestPasswordReset);
+// user_route.post('/requestPasswordReset', auth.isLogout, userController.requestPasswordReset);
 user_route.get('/resetPassword/:token', userController.resetPasswordPage);
 user_route.post('/resetPassword/:token', userController.resetPassword);
 
@@ -74,9 +74,6 @@ user_route.post('/post/:postId/add-comment', auth.isLogin, userController.addCom
 user_route.post('/post/:postId/delete-comment/:commentId', auth.isLogin, userController.deleteComment); // delete comment
 user_route.get('/activity', auth.isLogin, userController.getPosts);
 user_route.post('/delete-post/:postId', auth.isLogin, userController.deletePost);
-
-  
-
 
 
 user_route.get("/admin", auth.isLogin, userController.loadAllUsers);

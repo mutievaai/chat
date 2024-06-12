@@ -44,29 +44,32 @@ var usp = io.of("/user-namespace");
 
 usp.on("connection", async function (socket) {
   console.log("User connected");
-
+ 
   var userId = socket.handshake.auth.token;
-
+ 
   await User.findByIdAndUpdate({ _id: userId }, { $set: { is_online: "1" } });
-
+ 
   //User broadcast online status
   socket.broadcast.emit("getOnlineUser", { user_id: userId });
-
+ 
+  socket.emit("getOnlineUser", { user_id: userId });
+ 
+ 
   socket.on("disconnect", async function () {
     console.log("User disconnected");
-
+ 
     var userId = socket.handshake.auth.token;
     await User.findByIdAndUpdate({ _id: userId }, { $set: { is_online: "0" } });
-
+ 
     //User broadcast offline status
     socket.broadcast.emit("getOfflineUser", { user_id: userId });
   });
-
+ 
   //chatting implementation
   socket.on("newChat", function (data) {
     socket.broadcast.emit("loadNewChat", data);
   });
-
+ 
   //load old chats
   socket.on("existsChat", async function (data) {
     var chats = await Chat.find({
@@ -78,6 +81,7 @@ usp.on("connection", async function (socket) {
     socket.emit("loadChats", { chats: chats });
   });
 });
+
 
 http.listen(4000, function () {
   console.log("4000 server is runing");

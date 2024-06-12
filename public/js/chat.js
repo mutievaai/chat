@@ -66,10 +66,12 @@ $(document).ready(function () {
         }); 
     }); 
  
-    socket.on("loadNewChat", (data) => { 
+    socket.on("loadNewChat", (data) => {
+        // Only append the message if it is for the current chat
         if (sender_id === data.receiver_id && receiver_id === data.sender_id) { 
             const chatHtml = `<div class="message distance-user-chat"><h5>${data.message}</h5></div>`; 
-            $("#chat-container").append(chatHtml); 
+            $("#chat-container").append(chatHtml);
+            scrollChat();
         } 
     }); 
  
@@ -82,10 +84,24 @@ $(document).ready(function () {
             const chatClass = chat.sender_id === sender_id ? "current-user-chat" : "distance-user-chat"; 
             chatHtml += `<div class="message ${chatClass}"><h5>${chat.message}</h5></div>`; 
         }); 
- 
         $("#chat-container").append(chatHtml); 
         scrollChat(); 
     }); 
+     // Listen for online status
+    socket.on("getOnlineUser", (data) => {
+        const userItem = $(`.user-item[data-id="${data.user_id}"]`);
+        if (userItem.length) {
+        userItem.addClass("online");
+        }
+    });
+ 
+    // Listen for offline status
+    socket.on("getOfflineUser", (data) => {
+        const userItem = $(`.user-item[data-id="${data.user_id}"]`);
+        if (userItem.length) {
+        userItem.removeClass("online");
+        }
+    });
  
     function scrollChat() { 
         $("#chat-container").animate({ scrollTop: $("#chat-container")[0].scrollHeight }, 0); 

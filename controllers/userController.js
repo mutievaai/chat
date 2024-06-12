@@ -59,10 +59,10 @@ const login = async (req, res) => {
         req.session.user = userData;
         res.redirect("/dashboard");
       } else {
-        res.render("login", { messageLog: "Email and password are incorrect" });
+        res.render("login", { messageLog: "Email and password are incorrect", lang: res.locale });
       }
     } else {
-      res.render("login", { messageLog: "Email and password are incorrect" });
+      res.render("login", { messageLog: "Email and password are incorrect", lang: res.locale });
     }
   } catch (error) {
     console.log(error.message);
@@ -85,16 +85,16 @@ const forgotPassword = async (req, res) => {
       return res.render('forgotPassword', { message: "User not found", lang: res.locale });
     }
 
-    const token = jwt.sign({ email }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
-  // Generate a unique reset token
-  const resetToken = crypto.randomBytes(32).toString('hex');
-  // Set the expiry time for the token (e.g., 1 hour)
-  const resetTokenExpires = Date.now() + 3600000; // 1 hour
+    // const token = jwt.sign({ email }, process.env.JWT_SECRET_KEY, { expiresIn: "1h" });
+        // Generate a unique reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    // Set the expiry time for the token (e.g., 1 hour)
+    const resetTokenExpires = Date.now() + 3600000; // 1 hour
 
-  // Update the user's reset token and expiry in the database
-  user.resetPasswordToken = resetToken;
-  user.resetPasswordExpires = resetTokenExpires;
-  await user.save();
+    // Update the user's reset token and expiry in the database
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = resetTokenExpires;
+    await user.save();
 
   // Construct the reset password URL with the token
   const resetPasswordUrl = `${process.env.CLIENT_URL}/${resetToken}`;
@@ -111,7 +111,7 @@ const forgotPassword = async (req, res) => {
       from: process.env.MY_GMAIL,
       to: email,
       subject: "Password Reset Request",
-      text: `Click on this link to reset your password: ${process.env.CLIENT_URL}/${token}`,
+      text: `Click on this link to reset your password: ${process.env.CLIENT_URL}/${resetToken}`,
     };
 
     await transporter.sendMail(mailOptions);
@@ -137,7 +137,7 @@ const requestPasswordReset = async (req, res) => {
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpires = resetTokenExpires;
     await user.save();
-
+    
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -169,7 +169,7 @@ const requestPasswordReset = async (req, res) => {
 };
 
 const resetPasswordPage = (req, res) => {
-  res.render('resetPasswordPage', { message: "", token: req.params.token, lang: res.locale });
+  res.render('resetPasswordPage', { message: "", lang: res.locale });
 };
 
 const resetPassword = async (req, res) => {
@@ -357,12 +357,15 @@ const deleteComment = async (req, res) => {
     }
     console.log(req.session.user._id.toString()+", "+ comment.user_id.toString())
     if (user.role == "admin"){
-      pass;
-    }else if (user._id.toString() != comment.user_id.toString()) {
+      await Comment.findByIdAndDelete(commentId);
+      res.redirect(`/post/${post_id}`); // Redirect to the post page
+    }else if (user._id.toString() == comment.user_id.toString()) {
+      await Comment.findByIdAndDelete(commentId);
+      res.redirect(`/post/${post_id}`); // Redirect to the post page
+    }else{
       return res.status(403).send("You do not have permission to delete this comment");
     }
-    await Comment.findByIdAndDelete(commentId);
-    res.redirect(`/post/${post_id}`); // Redirect to the post page
+
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -645,7 +648,7 @@ const updateUserProfile = async (req, res) => {
     await User.findByIdAndUpdate(userId, updateData);
 
     
-    res.redirect(`/profile/${userId}`,{ lang: res.locale});
+    res.redirect(`/profile/${userId}`);
   } catch (error) {
     console.error(error.message);
     res.status(500).json({ error: "Server Error" });
@@ -709,7 +712,7 @@ const acceptRequest = async (req, res) => {
     await requestingUser.save();
 
     // Redirect to friends page after successfully accepting the friend request
-    res.redirect("/friends", {user: req.session.user, lang: res.locale});
+    res.redirect("/friends");
   } catch (eror) {
     console.error(error.message);
   }
@@ -735,7 +738,7 @@ const declineRequest = async (req, res) => {
     // Save changes to the current user
     await currentUser.save();
     // Redirect to friends page after successfully declining the friend request
-    res.redirect("/friends", {user: req.session.user, lang: res.locale});
+    res.redirect("/friends");
   } catch (error) {
     console.error(error.message);
     res.status(500).redirect("/friends"); // Redirect to friends page on server error
