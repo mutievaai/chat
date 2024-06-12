@@ -95,5 +95,19 @@
 	"About me": "About me",
 	"Audio": "Audio",
 	"Upload Music": "Upload Music",
-	"forgot_pass": "Forgot Password"
+	"forgot_pass": "Forgot Password",
+	"Sign in/up Form": "Sign in/up Form",
+  "Create Account": "Create Account",
+  "or use your email for registration": "or use your email for registration",
+  "Email": "Email",
+  "Password": "Password",
+  "Sign Up": "Sign Up",
+  "Sign in": "Sign in",
+  "or use your account": "or use your account",
+  "Forgot your password?": "Forgot your password?",
+  "Sign In": "Sign In",
+  "Welcome Back!": "Welcome Back!",
+  "To keep connected with us please login with your personal info": "To keep connected with us please login with your personal info",
+  "Hello, Friend!": "Hello, Friend!",
+  "Enter your personal details and start journey with us": "Enter your personal details and start journey with us"
 }
