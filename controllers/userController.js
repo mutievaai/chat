@@ -675,7 +675,7 @@ const acceptRequest = async (req, res) => {
       !requestingUser ||
       !currentUser.friendRequests.includes(friendRequestId)
     ) {
-      return res.status(404).redirect("/friends"); // Redirect to friends page if friend request not found
+      return res.status(404).redirect("/friends", {lang: res.locale}); // Redirect to friends page if friend request not found
     }
 
     // Add requestingUser to the friends list of currentUser
