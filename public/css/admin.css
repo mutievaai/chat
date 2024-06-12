@@ -38,7 +38,7 @@ td{
   vertical-align: middle;
 }
 
-.UserBtn {
+.Userbtn {
   /* padding: 0.75rem 1.5rem; */
   background-color: #3666bd;
   width: 120px; 
@@ -52,6 +52,6 @@ td{
   outline: none;
 }
 
-.UserBtn:hover {
+.Userbtn:hover {
   background-color: #0056b3;
 }
