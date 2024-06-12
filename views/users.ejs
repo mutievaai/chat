@@ -79,7 +79,7 @@
     <% for(let i = 0; i < users.length; i++){ %> 
       <a href="/profile/<%=users[i]['_id'] %>"> 
         <div class="user-card"> 
-          <img src="data:jpeg;base64,<%= users[i]['image'] %>" alt="<%= __('User image') %>" class="user-image"/> 
+          <img src="data:jpeg;base64,<%= users[i]['image'] %>" alt="<%= __('User image') %>" class="user-image" width="150px" height="150px"/> 
           <p class="user-name"><%=users[i]['name']%></p> 
         </div> 
       </a>   

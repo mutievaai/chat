@@ -95,5 +95,15 @@
 	"About me": "About me",
 	"Audio": "Audio",
 	"Upload Music": "Upload Music",
-	"Your browser does not support the audio element.": "Your browser does not support the audio element."
+	"Your browser does not support the audio element.": "Your browser does not support the audio element.",
+	"forgot_pass": "forgot_pass",
+	"": "",
+	"Email": "Email",
+	"Role": "Role",
+	"Action": "Action",
+	"Edit": "Edit",
+	"Edit User": "Edit User",
+	"User": "User",
+	"Admin": "Admin",
+	"Update": "Update"
 }
