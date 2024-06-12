@@ -104,6 +104,18 @@
   "About me": "Обо мне",
   "Audio": "Аудио",
   "Upload Music": "Загрузить музыку",
-	"forgot_pass": "Забыли пароль"
-
+	"forgot_pass": "Забыли пароль",
+	"Sign in/up Form": "Форма входа/регистрации",
+  "Create Account": "Создать аккаунт",
+  "or use your email for registration": "или используйте свою электронную почту для регистрации",
+  "Password": "Пароль",
+  "Sign Up": "Зарегистрироваться",
+  "Sign in": "Войти",
+  "or use your account": "или используйте свой аккаунт",
+  "Forgot your password?": "Забыли пароль?",
+  "Sign In": "Войти",
+  "Welcome Back!": "С возвращением!",
+  "To keep connected with us please login with your personal info": "Чтобы оставаться на связи с нами, войдите, используя свои личные данные",
+  "Hello, Friend!": "Привет, друг!",
+  "Enter your personal details and start journey with us": "Введите свои личные данные и начните путь с нами"
 }
