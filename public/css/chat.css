@@ -2,7 +2,7 @@
 body { 
     height: 90%; 
     font-family: Arial, sans-serif; 
-    margin-top: 3.7rem;;  
+    margin-top: 4.5rem;  
     padding: 0; 
     background-color: #f0f0f0; 
     display: flex; 
@@ -15,7 +15,7 @@ body {
 .chat-container { 
     display: flex; 
     width: 80%; 
-    height: 90vh; /* 100% of the viewport height */ 
+    height: 85vh; /* 100% of the viewport height */ 
     background-color: white; 
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
     border-radius: 10px; 
@@ -116,7 +116,7 @@ display: block;
     flex-grow: 1; 
     padding: 10px; 
     overflow-y: auto; 
-    height: calc(90vh - 20vh); /* Adjust based on the header and input height */ 
+    height: calc(85vh - 20vh); /* Adjust based on the header and input height */ 
     display: flex; 
     flex-direction: column; 
 } 
@@ -217,7 +217,4 @@ outline: none;
 }
 .btn1:hover {
 background-color: #0056b3;
-}
-.btn2:hover {
-background-color: #b30000;
 }

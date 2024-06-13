@@ -16,6 +16,7 @@ const nodemailer = require('nodemailer');
 const { title } = require("process");
 const {error} = require("console");
 const jwt = require("jsonwebtoken")
+const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const register = async (req, res) => {
   try {
@@ -745,6 +746,47 @@ const declineRequest = async (req, res) => {
   }
 };
 
+
+
+// Access your API key as an environment variable (see "Set up your API key" above)
+// const genAI = new GoogleGenerativeAI(process.env.GENERATIVE_AI_KEY);
+
+// const processAIRequest = async (req, res) => {
+//   try {
+//     const { userInput } = req.body;
+    
+//     const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash"});
+//     console.log(userInput);
+//     const prompt = userInput;
+  
+//     const result = await model.generateContent(prompt);
+//     const response = await result.response;
+//     const text = response.text();
+//     console.log(text);
+//     res.json(response)
+
+//   } catch (error) {
+//     console.error("Error generating lyrics:", error.message);
+//     console.error(error); // Log the entire error object for more details
+//     res.status(500).json({ success: false, error: 'Server error' });
+//   }
+// };
+
+
+
+// const loadAI = async (req, res) => {
+//   try {
+//     const userId = req.session.user._id;
+//     res.render("ai", {
+//       user: req.session.user,
+//       lang: res.locale
+//     });
+//   } catch (error) {
+//     console.error(error.message);
+//     // res.status(500).json({ error: 'Server error' });
+//   }
+// };
+
 module.exports = {
   register,
   loadLogin,
@@ -779,4 +821,6 @@ module.exports = {
   deleteComment,
   getPosts, 
   deletePost
+  // loadAI,
+  // processAIRequest
 };

@@ -1,0 +1,20 @@
+<%- include('layouts/header.ejs') %>
+
+<head> 
+  <link rel="stylesheet" href="/css/navbar.css">
+  <link rel="stylesheet" href="/css/ai.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head> 
+<body>
+  <div class="ai-container">
+    <h1><%= __('AI Song Lyrics Assistant') %></h1>
+    <form id="ai-form">
+      <textarea id="user-input" placeholder="Write about your song..."></textarea>
+      <button type="submit">Generate Lyrics</button>
+    </form>
+    <div id="ai-response"></div>
+  </div>
+  <script src="/js/ai.js"></script>
+</body>
+
+<%- include('layouts/footer.ejs') %>

@@ -97,6 +97,10 @@ user_route.post("/save-chat", userController.saveChat);
 user_route.post("/accept-request/:friendRequestId", auth.isLogin, userController.acceptRequest);
 user_route.post("/decline-request/:friendRequestId", auth.isLogin, userController.declineRequest);
 
+// user_route.get("/ai", auth.isLogin, userController.loadAI);
+// user_route.post("/process-ai-request", auth.isLogin, userController.processAIRequest);
+
+
 user_route.get("*", function (req, res) { 
   res.redirect("/");
 });

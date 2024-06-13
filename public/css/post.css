@@ -125,3 +125,21 @@ img.post-avatar{
 button.delete-button {
     margin-left: 10px;
 }
+
+.btn2:hover {
+  background-color: #b30000;
+  }
+
+.btn2 {
+  /* padding: 0.75rem 1.5rem; */
+  background-color: #bd3636;
+  width: 75px; 
+  height: 32px;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  outline: none;
+  }

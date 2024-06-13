@@ -32,7 +32,7 @@
                 <p><%= comment.content %></p>
                 <% if (user && (user._id.toString() === comment.user_id._id.toString() || user.role == "admin")) { %>
                   <form action="/post/<%=post._id%>/delete-comment/<%= comment._id %>" method="POST">
-                    <button class="delete-button" type="submit"><%= __('Delete') %></button>
+                    <button class="delete-button btn2" type="submit"><%= __('Delete') %></button>
                   </form>
                 <% } %>
               </div>
